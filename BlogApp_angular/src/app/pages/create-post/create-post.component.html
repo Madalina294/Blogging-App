@@ -1,0 +1,54 @@
+<mat-card>
+  <mat-card-content>
+    <div>
+      <form [formGroup]="postForm">
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Image</mat-label>
+          <input matInput formControlName="image" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Posted By</mat-label>
+          <input matInput formControlName="postedBy" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Content</mat-label>
+          <textarea matInput rows="5" formControlName="content"></textarea>
+        </mat-form-field>
+
+        <section>
+          <mat-form-field class="example-form-field">
+            <mat-label>Tags</mat-label>
+            <mat-chip-grid #chipGrid aria-label="Enter tags">
+              <mat-chip-row
+                *ngFor="let tag of tags; trackBy: trackByTag"
+                (removed)="removeTags(tag)"
+              >
+                {{ tag }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+            </mat-chip-grid>
+            <input
+              placeholder="New tag..."
+              [matChipInputFor]="chipGrid"
+              (matChipInputTokenEnd)="addTags($event)"
+              (keydown)="onKeyDown($event)"
+            />
+          </mat-form-field>
+        </section>
+
+        <button mat-raised-button color="primary" [disabled]="!postForm.valid">
+          Create new post
+        </button>
+      </form>
+    </div>
+  </mat-card-content>
+</mat-card>
