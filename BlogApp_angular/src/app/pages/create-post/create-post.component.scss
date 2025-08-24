@@ -52,3 +52,110 @@ button[mat-raised-button]:disabled {
   color: #666666 !important;
   box-shadow: none !important;
 }
+// create-post.component.scss
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.file-upload-section {
+  margin: 30px 0;
+  padding: 20px;
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  background-color: #fafafa;
+
+  h3 {
+    margin-top: 0;
+    color: #666;
+  }
+}
+
+.file-upload-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.file-info {
+  margin-top: 15px;
+}
+
+.file-card {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+
+  .file-details {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .file-icon {
+    font-size: 40px;
+    color: #1976d2;
+  }
+
+  .file-text {
+    flex: 1;
+
+    .file-name {
+      margin: 0;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .file-type, .file-size {
+      margin: 5px 0 0 0;
+      color: #666;
+      font-size: 14px;
+    }
+  }
+}
+
+
+.tags-section {
+  margin: 20px 0;
+}
+
+.tags-form-field {
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 30px;
+
+  .create-button {
+    min-width: 150px;
+  }
+}
+
+// Responsive design
+@media (max-width: 600px) {
+  .form-container {
+    padding: 10px;
+  }
+
+  .file-upload-buttons {
+    flex-direction: column;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+}

@@ -7,9 +7,69 @@
           <input matInput formControlName="name" />
         </mat-form-field>
 
+        <div class="file-upload-section">
+          <h3>Attach a file</h3>
+
+          <input
+            type="file"
+            id="fileInput"
+            #fileInput
+            (change)="onFileSelected($event)"
+            accept=".jpg,.jpeg,.png,.gif,.txt,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
+            style="display: none;"
+          />
+
+          <div class="file-upload-buttons">
+            <button
+              type="button"
+              mat-stroked-button
+              (click)="fileInput.click()"
+              [disabled]="isUploading"
+            >
+              <mat-icon>attach_file</mat-icon>
+              Select a file
+            </button>
+
+            <button
+              type="button"
+              mat-stroked-button
+              color="warn"
+              (click)="removeSelectedFile()"
+              *ngIf="selectedFile"
+              [disabled]="isUploading"
+            >
+              <mat-icon>delete</mat-icon>
+              Delete a file
+            </button>
+          </div>
+          <div *ngIf="selectedFile" class="file-info">
+            <mat-card class="file-card">
+              <mat-card-content>
+                <div class="file-details">
+                  <mat-icon class="file-icon">
+                    {{ getFileIcon() }}
+                  </mat-icon>
+
+                  <div class="file-text">
+                    <p class="file-name"><strong>{{ selectedFile.name }}</strong></p>
+                    <p class="file-type">{{ getFileTypeDisplay() }}</p>
+                    <p class="file-size">{{ (selectedFile.size / 1024).toFixed(2) }} KB</p>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+
+          <!-- Preview pentru imagini -->
+          <div *ngIf="filePreview" class="image-preview">
+            <img [src]="filePreview" alt="Preview" />
+          </div>
+
+        </div>
+
         <mat-form-field appearance="fill">
-          <mat-label>Image</mat-label>
-          <input matInput formControlName="image" />
+          <mat-label>File Name</mat-label>
+          <input matInput formControlName="fileName" />
         </mat-form-field>
 
         <mat-form-field appearance="fill">
@@ -45,7 +105,7 @@
           </mat-form-field>
         </section>
 
-        <button mat-raised-button color="primary" [disabled]="!postForm.valid">
+        <button mat-raised-button color="primary" [disabled]="!postForm.valid" (click)="createPost()">
           Create new post
         </button>
       </form>
