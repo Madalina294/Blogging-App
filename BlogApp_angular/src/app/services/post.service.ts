@@ -11,10 +11,10 @@ export class PostService {
   constructor(private http: HttpClient ) { }
 
   createNewPost(data:any): Observable<any> {
-    return this.http.post(BASE_URL + `api/posts`, data);
+    return this.http.post(BASE_URL + `api/user/post`, data);
   }
 
   getAllPosts(): Observable<any>{
-    return this.http.get(BASE_URL + `api/posts`);
+    return this.http.get(BASE_URL + `api/user/all-posts`);
   }
 }
