@@ -1,15 +1,16 @@
 package com.blogging.blogServer.service;
 
-import com.blogging.blogServer.dto.PostDto;
-import com.blogging.blogServer.entity.Post;
-import com.blogging.blogServer.repository.PostRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.blogging.blogServer.dto.PostDto;
+import com.blogging.blogServer.entity.Post;
+import com.blogging.blogServer.repository.PostRepository;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -22,6 +23,7 @@ public class PostServiceImpl implements PostService {
         post.setContent(postDto.getContent());
         post.setPostedBy(postDto.getPostedBy());
         post.setTags(postDto.getTags());
+        post.setFileName(postDto.getFileName());
         if (postDto.getFile() != null && !postDto.getFile().isEmpty()) {
             try {
                 // Convertire MultipartFile în byte[]

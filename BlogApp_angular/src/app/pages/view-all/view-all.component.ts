@@ -127,12 +127,6 @@ export class ViewAllComponent {
     }
   }
 
-   getImageUrl(file: any): string {
-    
-      return "data:image/jpeg;base64"+file;
-   
-  }
-
    private getMimeType(fileName: string): string {
     if (!fileName) return 'image/jpeg';
 

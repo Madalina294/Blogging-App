@@ -8,38 +8,34 @@
     </mat-card-header>
 
     <mat-grid-list cols="5">
-      <mat-grid-tile [colspan]="2" [rowspan]="1">
-        <!-- for image -->
-        <div *ngIf="isImage(item)" class="image-container">
-          <img [src]="getImageUrl(item.file)" class="post-img" alt="Post Image">
-        </div>
-
-        <!-- preview document -->
-        <div *ngIf="isDocument(item)" class="document-preview">
-          <div class="file-preview-card">
-            <mat-icon class="file-icon">{{ getFileIcon(item) }}</mat-icon>
-            <div class="file-info">
-              <p class="file-name">{{ item.fileName || 'Document' }}</p>
-              <p class="file-type">{{ getFileTypeDisplay(item) }}</p>
-            </div>
-            <button
-              mat-icon-button
-              color="primary"
-              (click)="downloadFile(item)"
-              class="download-btn"
-              matTooltip="Descarcă fișierul"
-            >
-              <mat-icon>download</mat-icon>
-            </button>
+      <div *ngIf="hasFile(item)">
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+          <!-- for image -->
+          <div *ngIf="isImage(item)" class="image-container">
+            <img [src]="'data:image/jpeg;base64,' + item.returnedFile" class="post-img" alt="Post Image">
           </div>
-        </div>
-        <!-- Placeholder -->
-        <div *ngIf="!hasFile(item)" class="no-file">
-          <mat-icon class="no-file-icon">description</mat-icon>
-          <p>No file attached</p>
-        </div>
 
-      </mat-grid-tile>
+          <!-- preview document -->
+          <div *ngIf="isDocument(item)" class="document-preview">
+            <div class="file-preview-card">
+              <mat-icon class="file-icon">{{ getFileIcon(item) }}</mat-icon>
+              <div class="file-info">
+                <p class="file-name">{{ item.fileName || 'Document' }}</p>
+                <p class="file-type">{{ getFileTypeDisplay(item) }}</p>
+              </div>
+              <button
+                mat-icon-button
+                color="primary"
+                (click)="downloadFile(item)"
+                class="download-btn"
+                matTooltip="Descarcă fișierul"
+              >
+                <mat-icon>download</mat-icon>
+              </button>
+            </div>
+          </div>
+        </mat-grid-tile>
+      </div>
       <mat-grid-tile [colspan]="3" [rowspan]="1">
         <mat-card-content style="color: white">
           {{item.content.length > 600 ? item.content.substring(0, 600) +"..." : item.content}}
