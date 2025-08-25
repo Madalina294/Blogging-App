@@ -1,0 +1,62 @@
+<div class="bg" style="background-color: #f8f8f8">
+  <nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'" nzTip="Working...">
+    <div class="parent">
+      <div class="child">
+        <div nz-row class="imgDiv">
+          <div nz-col nzSpan="24">
+            <h1 style="margin-left: 100px">Log In</h1>
+          </div>
+        </div>
+        <form nz-form [formGroup]="loginForm" (ngSubmit)="login()">
+
+          <nz-form-item>
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="The input is not a valid e-mail!"
+              [nzValidateStatus]="loginForm.controls['email']"
+            >
+              <input
+                nz-input
+                placeholder="E-mail"
+                id="email"
+                formControlName="email"
+              />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control
+              nzHasFeedback
+              [nzErrorTip]="errorPass"
+              [nzValidateStatus]="loginForm.controls['password']"
+            >
+              <input
+                nz-input
+                placeholder="Password"
+                type="password"
+                id="password"
+                formControlName="password"
+              />
+              <ng-template #errorPass let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Password is required!
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+
+          <button
+            nz-button
+            class="login-form-button login-form-margin"
+            [nzType]="'primary'"
+            type="submit"
+          >
+            Log In
+          </button>
+          Or <a routerLink="/signup"> Create an account</a>
+        </form>
+      </div>
+    </div>
+  </nz-spin>
+</div>
+
