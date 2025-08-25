@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {PostService} from '../../services/post.service';
+import {PostService} from '../../user-service/post.service';
 import {
   MatCard, MatCardActions,
   MatCardAvatar,

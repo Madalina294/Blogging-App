@@ -1,0 +1,54 @@
+<div class="card-container" *ngFor="let item of allPosts">
+  <mat-card style="background-color: #e395bc">
+
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title style="color: white">{{item.name}}</mat-card-title>
+      <mat-card-subtitle>Posted By: {{item.postedBy}} | Posted On: {{item.date|date:'medium'}}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-grid-list cols="5">
+      <div *ngIf="hasFile(item)">
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+          <!-- for image -->
+          <div *ngIf="isImage(item)" class="image-container">
+            <img [src]="'data:image/jpeg;base64,' + item.returnedFile" class="post-img" alt="Post Image">
+          </div>
+
+          <!-- preview document -->
+          <div *ngIf="isDocument(item)" class="document-preview">
+            <div class="file-preview-card">
+              <mat-icon class="file-icon">{{ getFileIcon(item) }}</mat-icon>
+              <div class="file-info">
+                <p class="file-name">{{ item.fileName || 'Document' }}</p>
+                <p class="file-type">{{ getFileTypeDisplay(item) }}</p>
+              </div>
+              <button
+                mat-icon-button
+                color="primary"
+                (click)="downloadFile(item)"
+                class="download-btn"
+                matTooltip="Descarcă fișierul"
+              >
+                <mat-icon>download</mat-icon>
+              </button>
+            </div>
+          </div>
+        </mat-grid-tile>
+      </div>
+      <mat-grid-tile [colspan]="3" [rowspan]="1">
+        <mat-card-content style="color: white">
+          {{item.content.length > 600 ? item.content.substring(0, 600) +"..." : item.content}}
+        </mat-card-content>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <hr>
+    <mat-card-actions>
+      <button mat-raised-button color="primary">{{item.likeCount}} <mat-icon>favorite</mat-icon>
+      </button>
+      <button mat-raised-button color="primary" style="margin-left: 5px">{{item.viewCount}} <mat-icon>remove_red_eye</mat-icon></button>
+      <button mat-raised-button color="primary" style="margin-left: 5px">View Post</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

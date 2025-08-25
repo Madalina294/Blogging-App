@@ -1,17 +1,77 @@
 <mat-toolbar>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+  <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+  >
     <mat-icon>menu</mat-icon>
   </button>
   <span>My App</span>
   <span class="example-spacer"></span>
-  <button mat-raised-button color="primary" routerLink="/create-post">Create a Post</button>
-  <button mat-raised-button color="primary" routerLink="/view-all">View All Posts</button>
-  <button mat-raised-button color="primary" routerLink="/login" *ngIf="!isCustomerLoggedIn">Log In</button>
-  <button mat-raised-button color="primary" routerLink="/login" *ngIf="isCustomerLoggedIn" (click)="logout()">Log Out</button>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+  <div *ngIf="isAdminLoggedIn">
+    <button
+      mat-raised-button
+      color="primary"
+      routerLink="/admin/view-all"
+    >
+      View All Posts
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      routerLink="/login"
+      (click)="logout()"
+    >
+      Log Out
+    </button>
+  </div>
+  <div *ngIf="isCustomerLoggedIn">
+    <button
+      mat-raised-button
+      color="primary"
+      routerLink="/user/create-post"
+    >
+      Create a Post
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      routerLink="/user/view-all"
+    >
+      View All Posts
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      routerLink="/login"
+      (click)="logout()"
+    >
+      Log Out
+    </button>
+  </div>
+
+  <button
+    mat-raised-button
+    color="primary"
+    routerLink="/login"
+    *ngIf="!isCustomerLoggedIn && !isAdminLoggedIn"
+  >
+    Log In
+  </button>
+
+  <button
+    mat-icon-button
+    class="example-icon favorite-icon"
+    aria-label="Example icon-button with heart icon"
+  >
     <mat-icon>favorite</mat-icon>
   </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+  <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with share icon"
+  >
     <mat-icon>share</mat-icon>
   </button>
 </mat-toolbar>

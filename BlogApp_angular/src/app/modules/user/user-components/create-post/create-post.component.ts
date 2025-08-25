@@ -8,7 +8,7 @@ import {MatButton} from '@angular/material/button';
 import {MatChipGrid, MatChipInput, MatChipRemove, MatChipRow} from '@angular/material/chips';
 import {MatIcon} from '@angular/material/icon';
 import {NgForOf, NgIf} from '@angular/common';
-import {PostService} from '../../services/post.service';
+import {PostService} from '../../user-service/post.service';
 
 @Component({
   selector: 'app-create-post',
@@ -50,7 +50,6 @@ export class CreatePostComponent implements OnInit {
       name:[null, [Validators.required]],
       content:[null, [Validators.required, Validators.maxLength(5000)]],
       file: [null],
-      postedBy: [null, [Validators.required]],
       fileName: [null]
     })
   }
@@ -99,7 +98,7 @@ export class CreatePostComponent implements OnInit {
 
     formData.append("name", this.postForm.get('name')?.value);
     formData.append("content", this.postForm.get('content')?.value);
-    formData.append("postedBy", this.postForm.get('postedBy')?.value);
+    //formData.append("postedBy", this.postForm.get('postedBy')?.value);
     formData.append("tags", this.postForm.get('tags')?.value);
     formData.append("fileName", this.postForm.get("fileName")?.value);
 
