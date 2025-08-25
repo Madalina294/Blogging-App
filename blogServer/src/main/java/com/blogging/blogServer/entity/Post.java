@@ -1,8 +1,11 @@
 package com.blogging.blogServer.entity;
 
 import com.blogging.blogServer.dto.PostDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
@@ -34,6 +37,12 @@ public class Post {
     private int viewCount;
 
     private List<String> tags;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private User user;
 
     public PostDto getPostDto() {
         PostDto postDto = new PostDto();

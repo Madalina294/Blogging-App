@@ -30,4 +30,6 @@ public class PostDto {
     private int viewCount;
 
     private List<String> tags;
+
+    private Long userId;
 }
