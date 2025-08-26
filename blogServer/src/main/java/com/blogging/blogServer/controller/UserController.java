@@ -2,11 +2,19 @@ package com.blogging.blogServer.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.blogging.blogServer.dto.PostDto;
 import com.blogging.blogServer.entity.Post;
@@ -44,6 +52,7 @@ public class UserController {
         try {
             Post post = simpleUserService.getPostById(postId);
             PostDto postDto = post.getPostDto();
+           
             return ResponseEntity.ok(postDto);
         } catch (EntityNotFoundException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -54,9 +63,12 @@ public class UserController {
     public ResponseEntity<?> likePost(@PathVariable Long postId) {
         try {
             simpleUserService.likePost(postId);
-            return ResponseEntity.ok(new String[]{"Post liked successfully!"});
+            return ResponseEntity.ok(Map.of("message", "Post liked successfully!"));
         } catch (EntityNotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
+        } catch (Exception e) {
+            System.out.println("Error liking post with ID " + postId + ": " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Error processing like request"));
         }
     }
 }

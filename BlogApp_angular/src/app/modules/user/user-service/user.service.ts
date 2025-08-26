@@ -29,6 +29,12 @@ export class UserService {
     });
   }
 
+  likePost(postId: number): Observable<any>{
+    return this.http.put(BASE_URL + `api/user/post/like/${postId}`, {}, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+
   createAuthorizationHeader(): HttpHeaders{
     let authHeaders: HttpHeaders = new HttpHeaders();
     const token = StorageService.getToken();
