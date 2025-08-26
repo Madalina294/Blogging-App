@@ -9,4 +9,5 @@ import java.util.List;
 public interface SimpleUserService {
     public boolean savePost(PostDto postDto) throws IOException;
     public List<PostDto> getAllPosts();
+    public Post getPostById(Long id);
 }
