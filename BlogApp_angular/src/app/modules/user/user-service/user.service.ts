@@ -7,7 +7,7 @@ const BASE_URL = "http://localhost:8080/"
 @Injectable({
   providedIn: 'root'
 })
-export class PostService {
+export class UserService {
 
   constructor(private http: HttpClient ) { }
 
@@ -23,11 +23,22 @@ export class PostService {
     });
   }
 
+  getPostById(postId: number): Observable<any>{
+    return this.http.get(BASE_URL + `api/user/post/${postId}`, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+
   createAuthorizationHeader(): HttpHeaders{
     let authHeaders: HttpHeaders = new HttpHeaders();
-    return authHeaders.set(
-      'Authorization',
-      'Bearer '+ StorageService.getToken()
-    );
+    const token = StorageService.getToken();
+    console.log('Token from storage:', token);
+    if (!token) {
+      console.error('No token found in storage');
+      return authHeaders;
+    }
+    const authHeader = 'Bearer ' + token;
+    console.log('Authorization header:', authHeader);
+    return authHeaders.set('Authorization', authHeader);
   }
 }

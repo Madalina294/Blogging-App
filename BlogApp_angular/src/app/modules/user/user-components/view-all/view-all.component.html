@@ -1,10 +1,12 @@
 <div class="card-container" *ngFor="let item of allPosts">
   <mat-card style="background-color: #e395bc">
-
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title style="color: white">{{item.name}}</mat-card-title>
-      <mat-card-subtitle>Posted By: {{item.postedBy}} | Posted On: {{item.date|date:'medium'}}</mat-card-subtitle>
+      <mat-card-title style="color: white">{{ item.name }}</mat-card-title>
+      <mat-card-subtitle
+        >Posted By: {{ item.postedBy }} | Posted On:
+        {{ item.date | date : "medium" }}</mat-card-subtitle
+      >
     </mat-card-header>
 
     <mat-grid-list cols="5">
@@ -12,7 +14,11 @@
         <mat-grid-tile [colspan]="2" [rowspan]="1">
           <!-- for image -->
           <div *ngIf="isImage(item)" class="image-container">
-            <img [src]="'data:image/jpeg;base64,' + item.returnedFile" class="post-img" alt="Post Image">
+            <img
+              [src]="'data:image/jpeg;base64,' + item.returnedFile"
+              class="post-img"
+              alt="Post Image"
+            />
           </div>
 
           <!-- preview document -->
@@ -20,7 +26,7 @@
             <div class="file-preview-card">
               <mat-icon class="file-icon">{{ getFileIcon(item) }}</mat-icon>
               <div class="file-info">
-                <p class="file-name">{{ item.fileName || 'Document' }}</p>
+                <p class="file-name">{{ item.fileName || "Document" }}</p>
                 <p class="file-type">{{ getFileTypeDisplay(item) }}</p>
               </div>
               <button
@@ -38,17 +44,31 @@
       </div>
       <mat-grid-tile [colspan]="3" [rowspan]="1">
         <mat-card-content style="color: white">
-          {{item.content.length > 600 ? item.content.substring(0, 600) +"..." : item.content}}
+          {{
+            item.content.length > 600
+              ? item.content.substring(0, 600) + "..."
+              : item.content
+          }}
         </mat-card-content>
       </mat-grid-tile>
     </mat-grid-list>
 
-    <hr>
+    <hr />
     <mat-card-actions>
-     <button mat-raised-button color="primary">{{item.likeCount}} <mat-icon>favorite</mat-icon>
-     </button>
-      <button mat-raised-button color="primary" style="margin-left: 5px">{{item.viewCount}} <mat-icon>remove_red_eye</mat-icon></button>
-      <button mat-raised-button color="primary" style="margin-left: 5px">View Post</button>
+      <button mat-raised-button color="primary">
+        {{ item.likeCount }} <mat-icon>favorite</mat-icon>
+      </button>
+      <button mat-raised-button color="primary" style="margin-left: 5px">
+        {{ item.viewCount }} <mat-icon>remove_red_eye</mat-icon>
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        style="margin-left: 5px"
+        routerLink="/user/view-post/{{ item.id }}"
+      >
+        View Post
+      </button>
     </mat-card-actions>
   </mat-card>
 </div>

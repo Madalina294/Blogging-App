@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {PostService} from '../../user-service/post.service';
+import {UserService} from '../../user-service/user.service';
 import {
   MatCard, MatCardActions,
   MatCardAvatar,
@@ -14,6 +14,7 @@ import {MatGridList, MatGridTile} from '@angular/material/grid-list';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {MatTooltip} from '@angular/material/tooltip';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-view-all',
@@ -33,7 +34,8 @@ import {MatTooltip} from '@angular/material/tooltip';
     NgForOf,
     NgIf,
     MatIconButton,
-    MatTooltip
+    MatTooltip,
+    RouterLink
   ],
   templateUrl: './view-all.component.html',
   styleUrl: './view-all.component.scss'
@@ -42,7 +44,7 @@ export class ViewAllComponent {
 
   allPosts: any[] = [];
   constructor(private snackBar: MatSnackBar,
-    private postService: PostService) {
+    private postService: UserService) {
   }
 
   ngOnInit() {

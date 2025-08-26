@@ -17,8 +17,10 @@ export class StorageService {
 
   static saveToken(token: string): void{
     if (!this.isBrowser()) return;
+    console.log('Saving token to localStorage:', token);
     window.localStorage.removeItem(TOKEN);
     window.localStorage.setItem(TOKEN, token);
+    console.log('Token saved successfully');
   }
 
   static saveUser(user: any): void{
@@ -29,7 +31,9 @@ export class StorageService {
 
   static getToken(): string | null{
     if (!this.isBrowser()) return null;
-    return window.localStorage.getItem(TOKEN);
+    const token = window.localStorage.getItem(TOKEN);
+    console.log('Retrieved token from localStorage:', token);
+    return token;
   }
 
   static getUser(): any{

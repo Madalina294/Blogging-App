@@ -63,6 +63,8 @@ public class JWTUtil {
     }
 
     public String generateToken(UserDetails userDetails){
-        return generateToken(new HashMap<>(), userDetails);
+        String token = generateToken(new HashMap<>(), userDetails);
+        System.out.println("Generated JWT token: " + token);
+        return token;
     }
 }

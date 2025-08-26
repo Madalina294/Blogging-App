@@ -1,11 +1,11 @@
 package com.blogging.blogServer.dto;
 
-import jakarta.persistence.Column;
-import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import lombok.Data;
 
 @Data
 public class PostDto {

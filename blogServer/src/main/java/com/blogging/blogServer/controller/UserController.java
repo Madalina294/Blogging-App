@@ -1,16 +1,18 @@
 package com.blogging.blogServer.controller;
 
-import com.blogging.blogServer.dto.PostDto;
-import com.blogging.blogServer.entity.Post;
-import com.blogging.blogServer.service.user.SimpleUserService;
-import jakarta.persistence.EntityNotFoundException;
+import java.io.IOException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.util.List;
+import com.blogging.blogServer.dto.PostDto;
+import com.blogging.blogServer.entity.Post;
+import com.blogging.blogServer.service.user.SimpleUserService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/api/user")
@@ -41,7 +43,18 @@ public class UserController {
     public ResponseEntity<?> getPostById(@PathVariable Long postId) {
         try {
             Post post = simpleUserService.getPostById(postId);
-            return ResponseEntity.ok(post);
+            PostDto postDto = post.getPostDto();
+            return ResponseEntity.ok(postDto);
+        } catch (EntityNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/post/like/{postId}")
+    public ResponseEntity<?> likePost(@PathVariable Long postId) {
+        try {
+            simpleUserService.likePost(postId);
+            return ResponseEntity.ok(new String[]{"Post liked successfully!"});
         } catch (EntityNotFoundException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

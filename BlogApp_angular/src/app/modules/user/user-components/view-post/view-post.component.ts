@@ -1,73 +1,96 @@
 import { Component } from '@angular/core';
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
-import {MatButton, MatIconButton} from "@angular/material/button";
-import {
-    MatCard,
-    MatCardActions,
-    MatCardAvatar,
-    MatCardContent,
-    MatCardHeader,
-    MatCardSubtitle, MatCardTitle
-} from "@angular/material/card";
-import {MatGridList, MatGridTile} from "@angular/material/grid-list";
+import {UserService} from '../../user-service/user.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {UserService} from '../../../user/user-service/user.service';
+import {ActivatedRoute} from '@angular/router';
+import {DatePipe, NgForOf, NgIf} from '@angular/common';
+import {
+  MatCard, MatCardActions,
+  MatCardAvatar,
+  MatCardContent,
+  MatCardHeader,
+  MatCardSubtitle,
+  MatCardTitle
+} from '@angular/material/card';
+import {MatGridList, MatGridTile} from '@angular/material/grid-list';
+import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {MatTooltip} from '@angular/material/tooltip';
-import {AdminServiceService} from '../../admin-service/admin-service.service';
+import {MatChip, MatChipSet} from '@angular/material/chips';
 
 @Component({
-  selector: 'app-view-all',
-    imports: [
-        DatePipe,
-        MatButton,
-        MatCard,
-        MatCardActions,
-        MatCardAvatar,
-        MatCardContent,
-        MatCardHeader,
-        MatCardSubtitle,
-        MatCardTitle,
-        MatGridList,
-        MatGridTile,
-        MatIcon,
-        MatIconButton,
-        MatTooltip,
-        NgForOf,
-        NgIf
-    ],
-  templateUrl: './view-all.component.html',
-  styleUrl: './view-all.component.scss'
+  selector: 'app-view-post',
+  imports: [
+    NgIf,
+    MatCard,
+    MatCardHeader,
+    MatCardAvatar,
+    MatCardTitle,
+    MatCardSubtitle,
+    DatePipe,
+    MatCardContent,
+    MatGridList,
+    MatGridTile,
+    MatIcon,
+    MatIconButton,
+    MatTooltip,
+    MatChipSet,
+    MatChip,
+    NgForOf,
+    MatButton,
+    MatCardActions
+  ],
+  templateUrl: './view-post.component.html',
+  styleUrl: './view-post.component.scss'
 })
-export class ViewAllComponent {
+export class ViewPostComponent {
 
-  allPosts: any[] = [];
-  constructor(private snackBar: MatSnackBar,
-              private adminService: AdminServiceService) {
+  postId;
+  postData: any;
+
+  constructor(private userService: UserService,
+              private snackBar: MatSnackBar,
+              private activatedRoute: ActivatedRoute){
+    this.postId = this.activatedRoute.snapshot.params['id'];
   }
 
-  ngOnInit() {
-    this.getAllPosts();
+  ngOnInit(){
+    console.log('Post ID from route:', this.postId);
+    console.log('Post ID type:', typeof this.postId);
+    this.getPostById();
   }
 
-  getAllPosts() {
-    this.adminService.getAllPosts().subscribe(res => {
-      this.allPosts = res;
-      console.log(res);
-    }, error => {
-      this.snackBar.open("Something went wrong!", "Ok");
+  getPostById(){
+    this.userService.getPostById(this.postId).subscribe(res=>{
+      this.postData = res;
+      console.log('Post data received:', res);
+      console.log('Has file:', this.hasFile(res));
+      console.log('Is image:', this.isImage(res));
+      console.log('Is document:', this.isDocument(res));
+      if (this.hasFile(res)) {
+        console.log('File name:', res.fileName);
+        console.log('Returned file length:', res.returnedFile ? res.returnedFile.length : 'null');
+      }
+    }, error =>{
+      console.error('Error fetching post:', error);
+      this.snackBar.open("Something went wrong!", "OK");
     })
+
   }
+
 
   hasFile(post: any): boolean {
-    return post.returnedFile && post.returnedFile.length > 0;
+    const hasFile = post.returnedFile && post.returnedFile.length > 0;
+    console.log('hasFile check:', { returnedFile: post.returnedFile, length: post.returnedFile?.length, result: hasFile });
+    return hasFile;
   }
 
   isImage(post: any): boolean {
     if (!this.hasFile(post) || !post.fileName) return false;
 
     const extension = post.fileName.toLowerCase().split('.').pop();
-    return ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(extension);
+    const isImage = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(extension);
+    console.log('isImage check:', { fileName: post.fileName, extension, result: isImage });
+    return isImage;
   }
 
   isDocument(post: any): boolean {

@@ -8,7 +8,7 @@ import {MatButton} from '@angular/material/button';
 import {MatChipGrid, MatChipInput, MatChipRemove, MatChipRow} from '@angular/material/chips';
 import {MatIcon} from '@angular/material/icon';
 import {NgForOf, NgIf} from '@angular/common';
-import {PostService} from '../../user-service/post.service';
+import {UserService} from '../../user-service/user.service';
 
 @Component({
   selector: 'app-create-post',
@@ -43,7 +43,7 @@ export class CreatePostComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private router: Router,
               private snackBar: MatSnackBar,
-              private postService: PostService){}
+              private postService: UserService){}
 
   ngOnInit(){
     this.postForm = this.fb.group({

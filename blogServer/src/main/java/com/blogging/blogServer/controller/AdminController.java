@@ -33,7 +33,8 @@ public class AdminController {
     public ResponseEntity<?> getPostById(@PathVariable Long postId) {
         try {
             Post post = adminService.getPostById(postId);
-            return ResponseEntity.ok(post);
+            PostDto postDto = post.getPostDto();
+            return ResponseEntity.ok(postDto);
         } catch (EntityNotFoundException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

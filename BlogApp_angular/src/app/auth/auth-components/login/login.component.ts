@@ -69,6 +69,7 @@ export class LoginComponent {
     }
     this.isSpinning = true;
     this.service.login(this.loginForm.value).subscribe((res): any => {
+      console.log('Login response:', res);
 
       if(res.userId !== null){
         const user ={
@@ -76,6 +77,8 @@ export class LoginComponent {
           role: res.userRole,
           name: res.userName
         };
+        console.log('Saving user:', user);
+        console.log('Saving JWT token:', res.jwt);
         StorageService.saveUser(user);
         StorageService.saveToken(res.jwt);
         if(StorageService.isAdminLoggedIn()){
