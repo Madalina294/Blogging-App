@@ -35,6 +35,23 @@ export class UserService {
     });
   }
 
+  getCommentsByPostId(postId: number): Observable<any>{
+    return this.http.get(BASE_URL + `api/user/post/${postId}/comments`, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+
+  createComment(postId: number, content: string): Observable<any> {
+    const params = new URLSearchParams();
+    params.set('postId', postId.toString());
+    params.set('content', content);
+
+    return this.http.post(BASE_URL + `api/user/comment`, params, {
+      headers: this.createAuthorizationHeader().set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+
+
   createAuthorizationHeader(): HttpHeaders{
     let authHeaders: HttpHeaders = new HttpHeaders();
     const token = StorageService.getToken();

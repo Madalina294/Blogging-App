@@ -16,6 +16,8 @@ import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {MatTooltip} from '@angular/material/tooltip';
 import {MatChip, MatChipSet} from '@angular/material/chips';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 
 @Component({
   selector: 'app-view-post',
@@ -37,7 +39,11 @@ import {MatChip, MatChipSet} from '@angular/material/chips';
     MatChip,
     NgForOf,
     MatButton,
-    MatCardActions
+    MatCardActions,
+    ReactiveFormsModule,
+    MatFormField,
+    MatInput,
+    MatLabel
   ],
   templateUrl: './view-post.component.html',
   styleUrl: './view-post.component.scss'
@@ -47,26 +53,58 @@ export class ViewPostComponent {
   postId;
   postData: any;
 
+  commentForm!: FormGroup;
+  comments: any = [];
+
   constructor(private userService: UserService,
               private snackBar: MatSnackBar,
-              private activatedRoute: ActivatedRoute){
+              private activatedRoute: ActivatedRoute,
+              private fb: FormBuilder){
     this.postId = Number(this.activatedRoute.snapshot.params['id']);
   }
 
   ngOnInit(){
-    console.log('Post ID from route:', this.postId);
-    console.log('Post ID type:', typeof this.postId);
     this.getPostById();
+
+    this.commentForm = this.fb.group({
+      content:[null, [Validators.required]]
+    })
+  }
+
+  publishComment(){
+    const content = this.commentForm.get('content')?.value;
+
+    this.userService.createComment(this.postId, content).subscribe({
+      next: (res) => {
+        this.snackBar.open("Comment posted successfully!", "OK", { duration: 3000 });
+        this.commentForm.reset();
+        // Opțional: reîncarcă postul pentru a afișa comentariile
+        this.getPostById();
+        this.getCommentsByPostId();
+      },
+      error: (error) => {
+        console.error('Error posting comment:', error);
+        this.snackBar.open("Something went wrong! Please try again.", "OK", { duration: 3000 });
+      }
+    });
   }
 
   getPostById(){
     this.userService.getPostById(this.postId).subscribe(res=>{
       this.postData = res;
+      this.getCommentsByPostId();
     }, error =>{
       console.error('Error fetching post:', error);
       this.snackBar.open("Something went wrong!", "OK");
     })
+  }
 
+  getCommentsByPostId(){
+    this.userService.getCommentsByPostId(this.postId).subscribe(res=>{
+      this.comments = res;
+    }, error =>{
+      this.snackBar.open("Something went wrong!", "OK");
+    })
   }
 
 
@@ -229,7 +267,7 @@ export class ViewPostComponent {
           console.error('Error liking post:', error);
           console.error('Error status:', error.status);
           console.error('Error message:', error.message);
-          
+
           // Verifică dacă eroarea este din cauza parsing-ului JSON
           if (error.status === 200 && error.message.includes('Http failure during parsing')) {
             // Răspunsul a fost de succes, doar că nu s-a putut parsa JSON-ul

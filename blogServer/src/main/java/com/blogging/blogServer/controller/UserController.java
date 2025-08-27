@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blogging.blogServer.dto.PostDto;
@@ -69,6 +70,23 @@ public class UserController {
         } catch (Exception e) {
             System.out.println("Error liking post with ID " + postId + ": " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Error processing like request"));
+        }
+    }
+
+    @PostMapping("/comment")
+    public ResponseEntity<?> createComment(@RequestParam Long postId, @RequestParam String content){
+
+        boolean success = simpleUserService.createComment(postId, content);
+        if(success){return ResponseEntity.status(HttpStatus.CREATED).build();}
+        else return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @GetMapping("/post/{id}/comments")
+    public ResponseEntity<?> getComments(@PathVariable("id") Long postId){
+        try{
+            return ResponseEntity.ok(simpleUserService.getCommentsByPostId(postId));
+        } catch(EntityNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 }
