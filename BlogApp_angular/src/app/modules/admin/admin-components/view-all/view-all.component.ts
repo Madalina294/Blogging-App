@@ -15,27 +15,29 @@ import {UserService} from '../../../user/user-service/user.service';
 import {MatIcon} from '@angular/material/icon';
 import {MatTooltip} from '@angular/material/tooltip';
 import {AdminServiceService} from '../../admin-service/admin-service.service';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-view-all',
-    imports: [
-        DatePipe,
-        MatButton,
-        MatCard,
-        MatCardActions,
-        MatCardAvatar,
-        MatCardContent,
-        MatCardHeader,
-        MatCardSubtitle,
-        MatCardTitle,
-        MatGridList,
-        MatGridTile,
-        MatIcon,
-        MatIconButton,
-        MatTooltip,
-        NgForOf,
-        NgIf
-    ],
+  imports: [
+    DatePipe,
+    MatButton,
+    MatCard,
+    MatCardActions,
+    MatCardAvatar,
+    MatCardContent,
+    MatCardHeader,
+    MatCardSubtitle,
+    MatCardTitle,
+    MatGridList,
+    MatGridTile,
+    MatIcon,
+    MatIconButton,
+    MatTooltip,
+    NgForOf,
+    NgIf,
+    RouterLink
+  ],
   templateUrl: './view-all.component.html',
   styleUrl: './view-all.component.scss'
 })

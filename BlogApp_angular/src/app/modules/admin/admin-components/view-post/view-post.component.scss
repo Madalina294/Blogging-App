@@ -1,0 +1,86 @@
+.card-container{
+  margin: 16px;
+  max-width: 60%;
+  padding-bottom: 30px;
+}
+
+mat-card{
+  padding: 10px;
+}
+
+.example-header-image{
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+mat-card-content{
+  margin-top: 20px;
+}
+
+mat-card-footer{
+  margin-left: 20px;
+}
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.post-img{
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  margin-top: 15px;
+}
+
+.document-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.file-preview-card {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  min-width: 250px;
+}
+
+.file-icon {
+  font-size: 48px;
+  margin-right: 15px;
+  color: #fff;
+}
+
+.file-info {
+  flex: 1;
+}
+
+.file-name {
+  margin: 0;
+  font-weight: bold;
+  color: #fff;
+  font-size: 14px;
+}
+
+.file-type {
+  margin: 5px 0 0 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+}
+
+.download-btn {
+  color: #fff;
+}
+
+.comment-card{
+  margin-top: 20px;
+}
+
+mat-form-file{
+  width: 100%;
+}

@@ -39,4 +39,21 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
+    @PostMapping("/comment")
+    public ResponseEntity<?> createComment(@RequestParam Long postId, @RequestParam String content){
+
+        boolean success = adminService.createComment(postId, content);
+        if(success){return ResponseEntity.status(HttpStatus.CREATED).build();}
+        else return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @GetMapping("/post/{id}/comments")
+    public ResponseEntity<?> getComments(@PathVariable("id") Long postId){
+        try{
+            return ResponseEntity.ok(adminService.getCommentsByPostId(postId));
+        } catch(EntityNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }

@@ -236,7 +236,7 @@ export class ViewPostComponent {
         link.click();
         window.URL.revokeObjectURL(url);
       } catch (error) {
-        this.snackBar.open("Eroare la descărcarea fișierului!", "Ok");
+        this.snackBar.open("Error at downloading the file!", "Ok");
       }
     }
   }
@@ -256,21 +256,13 @@ export class ViewPostComponent {
   likePost() {
     console.log('likePost called with postData:', this.postData);
     if (this.postData && this.postData.id) {
-      console.log('Using post ID:', this.postData.id, 'Type:', typeof this.postData.id);
       this.userService.likePost(this.postData.id).subscribe(
-        (response) => {
-          console.log('Post liked successfully:', response);
+        (res) => {
           this.snackBar.open("Post liked successfully!", "OK", { duration: 2000 });
           this.getPostById();
         },
         (error) => {
-          console.error('Error liking post:', error);
-          console.error('Error status:', error.status);
-          console.error('Error message:', error.message);
-
-          // Verifică dacă eroarea este din cauza parsing-ului JSON
           if (error.status === 200 && error.message.includes('Http failure during parsing')) {
-            // Răspunsul a fost de succes, doar că nu s-a putut parsa JSON-ul
             this.snackBar.open("Post liked successfully!", "OK", { duration: 2000 });
             this.getPostById();
           } else {
@@ -279,7 +271,6 @@ export class ViewPostComponent {
         }
       );
     } else {
-      console.error('Post data or post ID is missing');
       this.snackBar.open("Cannot like post: missing data", "OK", { duration: 3000 });
     }
   }

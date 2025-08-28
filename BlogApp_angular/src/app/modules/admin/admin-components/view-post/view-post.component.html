@@ -1,1 +1,100 @@
-<p>view-post works!</p>
+<div *ngIf="postData" class="card-container">
+  <mat-card style="background-color: #e395bc">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title style="color: white">{{ postData.name }}</mat-card-title>
+      <mat-card-subtitle
+      >Posted by: {{ postData.postedBy }} | Posted On:
+        {{ postData.date | date : "medium" }}</mat-card-subtitle
+      >
+    </mat-card-header>
+    <mat-grid-list cols="5">
+      <mat-grid-tile *ngIf="hasFile(postData)" [colspan]="2" [rowspan]="1">
+        <!-- for image -->
+        <div *ngIf="isImage(postData)" class="image-container">
+          <img
+            [src]="'data:image/jpeg;base64,' + postData.returnedFile"
+            class="post-img"
+            alt="Post Image"
+          />
+        </div>
+
+        <!-- preview document -->
+        <div *ngIf="isDocument(postData)" class="document-preview">
+          <div class="file-preview-card">
+            <mat-icon class="file-icon">{{ getFileIcon(postData) }}</mat-icon>
+            <div class="file-info">
+              <p class="file-name">{{ postData.fileName || "Document" }}</p>
+              <p class="file-type">{{ getFileTypeDisplay(postData) }}</p>
+            </div>
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="downloadFile(postData)"
+              class="download-btn"
+              matTooltip="Descarcă fișierul"
+            >
+              <mat-icon>download</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <mat-card-content style="color: white">{{
+        postData.content
+      }}</mat-card-content>
+    <mat-chip-set>
+      <mat-chip *ngFor="let tag of postData.tags">{{ tag }}</mat-chip>
+    </mat-chip-set>
+    <mat-card-actions>
+      <button mat-raised-button color="primary">
+        {{ postData.likeCount }} <mat-icon>favorite</mat-icon>
+      </button>
+      <button mat-raised-button color="primary" style="margin-left: 5px">
+        {{ postData.viewCount }} <mat-icon>remove_red_eye</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card class="comment-card" style="background-color: #e395bc">
+    <mat-card-content>
+      <h4>Publish your comment</h4>
+      <div>
+        <form [formGroup]="commentForm">
+          <mat-form-field>
+            <mat-label>Content</mat-label>
+            <textarea matInput formControlName="content"></textarea>
+          </mat-form-field>
+          <button
+            mat-raised-button
+            color="primary"
+            style="float: right; margin-right: 60px;"
+            [disabled]="!commentForm.valid"
+            (click)="publishComment()"
+          >
+            Publish
+          </button>
+        </form>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <br>
+  <!-- Comments Section -->
+  <mat-card class="comments-section" *ngIf="comments && comments.length > 0" style="background-color: #e395bc">
+    <mat-card-content>
+      <h4>Comments ({{ comments.length }})</h4>
+      <div class="comment-item" *ngFor="let comment of comments">
+        <div class="comment-header">
+          <strong>{{ comment.postedBy }}</strong><span> | </span>
+          <span class="comment-date">{{
+              comment.postedOn | date : "medium"
+            }}</span>
+        </div>
+        <div class="comment-content">
+          {{ comment.content }}
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+

@@ -17,6 +17,28 @@ export class AdminServiceService {
     });
   }
 
+  getPostById(postId: number): Observable<any>{
+    return this.http.get(BASE_URL + `api/admin/post/${postId}`, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+
+  getCommentsByPostId(postId: number): Observable<any>{
+    return this.http.get(BASE_URL + `api/admin/post/${postId}/comments`, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+
+  createComment(postId: number, content: string): Observable<any> {
+    const params = new URLSearchParams();
+    params.set('postId', postId.toString());
+    params.set('content', content);
+
+    return this.http.post(BASE_URL + `api/admin/comment`, params, {
+      headers: this.createAuthorizationHeader().set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+
   createAuthorizationHeader(): HttpHeaders{
     let authHeaders: HttpHeaders = new HttpHeaders();
     return authHeaders.set(
