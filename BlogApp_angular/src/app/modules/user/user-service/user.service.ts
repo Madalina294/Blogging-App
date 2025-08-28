@@ -29,6 +29,12 @@ export class UserService {
     });
   }
 
+  getPostsByName(name: string): Observable<any>{
+    return this.http.get(BASE_URL + `api/user/post/search/${name}`, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+
   likePost(postId: number): Observable<any>{
     return this.http.put(BASE_URL + `api/user/post/like/${postId}`, {}, {
       headers: this.createAuthorizationHeader()

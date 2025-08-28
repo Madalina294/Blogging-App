@@ -123,6 +123,11 @@ public class SimpleUserServiceImpl implements SimpleUserService {
         else throw new EntityNotFoundException("Post not found");
     }
 
+    @Override
+    public List<PostDto> getPostsByName(String name) {
+        return postRepository.findAllByNameContaining(name).stream().map(Post::getPostDto).collect(Collectors.toList());
+    }
+
 
 }
 

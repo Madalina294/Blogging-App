@@ -89,4 +89,13 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
+    @GetMapping("/post/search/{postName}")
+    public ResponseEntity<?> searchPost(@PathVariable("postName") String postName){
+        try{
+            return ResponseEntity.ok(simpleUserService.getPostsByName(postName));
+        } catch(EntityNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }

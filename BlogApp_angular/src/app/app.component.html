@@ -19,6 +19,13 @@
     <button
       mat-raised-button
       color="primary"
+      routerLink=""
+    >
+      <mat-icon>search</mat-icon>
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
       routerLink="/login"
       (click)="logout()"
     >
@@ -39,6 +46,14 @@
       routerLink="/user/view-all"
     >
       View All Posts
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      routerLink="/user/search"
+    >
+      <mat-icon>search</mat-icon>
     </button>
 
     <button

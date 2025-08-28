@@ -1,0 +1,47 @@
+.search-form{
+  padding: 40px;
+}
+
+.search-input{
+  color: #e395bc;
+}
+
+
+::ng-deep .search-input .mat-mdc-input-element {
+  color: hotpink !important;
+}
+
+::ng-deep .search-input .mat-mdc-form-field-focus-overlay {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+::ng-deep .search-input .mat-mdc-form-field-label {
+  color: #666666 !important;
+}
+
+.card-container{
+  margin: 16px;
+  max-width: 60%;
+  padding-bottom: 30px;
+}
+
+mat-card{
+  padding: 10px;
+  text-decoration-color: white;
+}
+
+.example-header-image{
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+mat-card-footer{
+  margin-left: 20px;
+}
+
+.post-img{
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  margin-top: 15px;
+}

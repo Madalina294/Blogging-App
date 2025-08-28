@@ -4,12 +4,14 @@ import {CreatePostComponent} from './user-components/create-post/create-post.com
 import {HomeComponent} from './user-components/home/home.component';
 import {ViewAllComponent} from './user-components/view-all/view-all.component';
 import {ViewPostComponent} from './user-components/view-post/view-post.component';
+import {SearchComponent} from './user-components/search/search.component';
 
 const routes : Routes = [
   {path: 'create-post', component: CreatePostComponent},
   {path: 'home', component: HomeComponent},
   {path: 'view-all', component: ViewAllComponent},
-  {path: 'view-post/:id', component: ViewPostComponent}
+  {path: 'view-post/:id', component: ViewPostComponent},
+  {path: 'search', component: SearchComponent}
 ];
 
 @NgModule({

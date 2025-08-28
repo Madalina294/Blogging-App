@@ -15,4 +15,5 @@ public interface SimpleUserService {
     public void likePost(Long id);
     public boolean createComment(Long id, String content);
     public List<CommentDto> getCommentsByPostId(Long postId);
+    public List<PostDto> getPostsByName(String name);
 }
