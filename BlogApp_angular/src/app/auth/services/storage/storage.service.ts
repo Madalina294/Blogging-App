@@ -85,7 +85,7 @@ export class StorageService {
     const user = this.getUser();
     if(user === null) return "";
 
-    // Return user name if available
+    // Return username if available
     if(user.name) return user.name;
     if(user.username) return user.username;
 

@@ -7,6 +7,7 @@ import {SearchComponent} from './user-components/search/search.component';
 
 const routes : Routes = [
   {path: 'view-all', component: ViewAllComponent},
+  {path: 'create-post', component: CreatePostComponent},
   {path: 'view-post/:id', component: ViewPostComponent},
   {path: 'search', component: SearchComponent}
 ];

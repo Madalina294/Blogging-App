@@ -6,11 +6,13 @@ import {MatIcon} from '@angular/material/icon';
 import {NgIf} from '@angular/common';
 import {StorageService} from './auth/services/storage/storage.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatDivider} from '@angular/material/divider';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatToolbar, MatButton, RouterLink, MatIconButton, MatIcon, NgIf],
+  imports: [RouterOutlet, MatToolbar, MatButton, RouterLink, MatIconButton, MatIcon, NgIf, MatMenuModule, MatDivider],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
