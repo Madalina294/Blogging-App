@@ -29,6 +29,12 @@ export class AdminServiceService {
     });
   }
 
+  searchPosts(searchTerm: string): Observable<any>{
+    return this.http.get(BASE_URL + `api/admin/post/search/${searchTerm}`, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+
   createComment(postId: number, content: string): Observable<any> {
     const params = new URLSearchParams();
     params.set('postId', postId.toString());

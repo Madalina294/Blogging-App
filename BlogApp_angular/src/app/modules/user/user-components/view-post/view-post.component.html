@@ -68,7 +68,7 @@
           <button
             mat-raised-button
             color="primary"
-            style="float: right; margin-right: 60px;"
+            style="float: right; margin-right: 60px"
             [disabled]="!commentForm.valid"
             (click)="publishComment()"
           >
@@ -78,14 +78,19 @@
       </div>
     </mat-card-content>
   </mat-card>
- <br>
+  <br />
   <!-- Comments Section -->
-  <mat-card class="comments-section" *ngIf="comments && comments.length > 0" style="background-color: #e395bc">
+  <mat-card
+    class="comments-section"
+    *ngIf="comments && comments.length > 0"
+    style="background-color: #e395bc"
+  >
     <mat-card-content>
       <h4>Comments ({{ comments.length }})</h4>
       <div class="comment-item" *ngFor="let comment of comments">
         <div class="comment-header">
-          <strong>{{ comment.postedBy }}</strong><span> | </span>
+          <strong>{{ comment.postedBy }}</strong
+          ><span> | </span>
           <span class="comment-date">{{
             comment.postedOn | date : "medium"
           }}</span>

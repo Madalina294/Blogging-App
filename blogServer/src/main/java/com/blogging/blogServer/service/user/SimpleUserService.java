@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.blogging.blogServer.dto.CommentDto;
 import com.blogging.blogServer.dto.PostDto;
-import com.blogging.blogServer.entity.Comment;
 import com.blogging.blogServer.entity.Post;
 
 public interface SimpleUserService {
@@ -15,5 +14,5 @@ public interface SimpleUserService {
     public void likePost(Long id);
     public boolean createComment(Long id, String content);
     public List<CommentDto> getCommentsByPostId(Long postId);
-    public List<PostDto> getPostsByName(String name);
+    public List<PostDto> searchPosts(String searchTerm);
 }

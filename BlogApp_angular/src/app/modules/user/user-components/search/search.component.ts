@@ -49,22 +49,24 @@ import {MatTooltip} from '@angular/material/tooltip';
 export class SearchComponent {
 
   results: any = [];
-  postName: string = "";
+  postTerm: string = "";
 
   constructor(private userService: UserService,
               private snackBar: MatSnackBar) {
   }
 
-  searchByPostName(){
-    this.userService.getPostsByName(this.postName).subscribe((res)=>{
+  searchByTerm(){
+    this.userService.searchPosts(this.postTerm).subscribe((res)=>{
       this.results = res;
       console.log(this.results);
       if(this.results.length === 0){
         this.snackBar.open("Posts not found!", "Ok");
       }
+      this.postTerm = "";
     }, error => {
       this.snackBar.open("Posts not found!", "Ok");
       this.results = [];
+      this.postTerm = "";
     })
   }
 

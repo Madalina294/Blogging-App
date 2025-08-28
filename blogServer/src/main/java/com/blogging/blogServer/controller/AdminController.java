@@ -56,4 +56,13 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
+    @GetMapping("/post/search/{searchTerm}")
+    public ResponseEntity<?> searchPostsExtended(@PathVariable("searchTerm") String searchTerm){
+        try{
+            return ResponseEntity.ok(adminService.searchPosts(searchTerm));
+        } catch(EntityNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }

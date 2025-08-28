@@ -82,10 +82,10 @@ export class LoginComponent {
         StorageService.saveUser(user);
         StorageService.saveToken(res.jwt);
         if(StorageService.isAdminLoggedIn()){
-          this.router.navigateByUrl("/admin/dashboard");
+          this.router.navigateByUrl("/admin/view-all");
         }
         else if(StorageService.isCustomerLoggedIn()){
-          this.router.navigateByUrl("/home");
+          this.router.navigateByUrl("/user/view-all");
         }
       }
       else{

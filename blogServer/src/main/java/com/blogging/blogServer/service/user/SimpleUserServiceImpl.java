@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.blogging.blogServer.dto.CommentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.blogging.blogServer.dto.CommentDto;
 import com.blogging.blogServer.dto.PostDto;
 import com.blogging.blogServer.entity.Comment;
 import com.blogging.blogServer.entity.Post;
@@ -124,8 +124,8 @@ public class SimpleUserServiceImpl implements SimpleUserService {
     }
 
     @Override
-    public List<PostDto> getPostsByName(String name) {
-        return postRepository.findAllByNameContaining(name).stream().map(Post::getPostDto).collect(Collectors.toList());
+    public List<PostDto> searchPosts(String searchTerm) {
+        return postRepository.searchPostsByTerm(searchTerm).stream().map(Post::getPostDto).collect(Collectors.toList());
     }
 
 

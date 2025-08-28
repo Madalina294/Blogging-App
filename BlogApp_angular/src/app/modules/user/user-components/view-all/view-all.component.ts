@@ -56,7 +56,7 @@ export class ViewAllComponent {
       this.allPosts = res;
       console.log(res);
     }, error => {
-      this.snackBar.open("Something went wrong!", "Ok");
+      this.snackBar.open("Something went wrong!", "Ok", { duration: 3000 });
     })
   }
 
@@ -184,7 +184,7 @@ export class ViewAllComponent {
         link.click();
         window.URL.revokeObjectURL(url);
       } catch (error) {
-        this.snackBar.open("Eroare la descărcarea fișierului!", "Ok");
+        this.snackBar.open("Error at downloading the file!", "Ok");
       }
     }
   }

@@ -1,24 +1,26 @@
 import { Component } from '@angular/core';
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
-import {MatButton, MatIconButton} from "@angular/material/button";
-import {
-    MatCard,
-    MatCardActions,
-    MatCardAvatar,
-    MatCardContent,
-    MatCardHeader,
-    MatCardSubtitle, MatCardTitle
-} from "@angular/material/card";
-import {MatGridList, MatGridTile} from "@angular/material/grid-list";
-import {MatSnackBar} from '@angular/material/snack-bar';
 import {UserService} from '../../../user/user-service/user.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {AdminServiceService} from '../../admin-service/admin-service.service';
+import {DatePipe, NgForOf, NgIf} from '@angular/common';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardAvatar,
+  MatCardContent,
+  MatCardHeader,
+  MatCardSubtitle, MatCardTitle
+} from '@angular/material/card';
+import {MatGridList, MatGridTile} from '@angular/material/grid-list';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {RouterLink} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {MatTooltip} from '@angular/material/tooltip';
-import {AdminServiceService} from '../../admin-service/admin-service.service';
-import {RouterLink} from '@angular/router';
 
 @Component({
-  selector: 'app-view-all',
+  selector: 'app-search',
   imports: [
     DatePipe,
     MatButton,
@@ -29,35 +31,42 @@ import {RouterLink} from '@angular/router';
     MatCardHeader,
     MatCardSubtitle,
     MatCardTitle,
+    MatFormField,
     MatGridList,
     MatGridTile,
     MatIcon,
     MatIconButton,
+    MatInput,
+    MatLabel,
     MatTooltip,
     NgForOf,
     NgIf,
-    RouterLink
+    ReactiveFormsModule,
+    RouterLink,
+    FormsModule
   ],
-  templateUrl: './view-all.component.html',
-  styleUrl: './view-all.component.scss'
+  templateUrl: './search.component.html',
+  styleUrl: './search.component.scss'
 })
-export class ViewAllComponent {
+export class SearchComponent {
 
-  allPosts: any[] = [];
-  constructor(private snackBar: MatSnackBar,
-              private adminService: AdminServiceService) {
+  results: any = [];
+  postTerm: string = "";
+
+  constructor(private adminService: AdminServiceService,
+              private snackBar: MatSnackBar) {
   }
 
-  ngOnInit() {
-    this.getAllPosts();
-  }
-
-  getAllPosts() {
-    this.adminService.getAllPosts().subscribe(res => {
-      this.allPosts = res;
-      console.log(res);
+  searchByTerm(){
+    this.adminService.searchPosts(this.postTerm).subscribe((res)=>{
+      this.results = res;
+      console.log(this.results);
+      if(this.results.length === 0){
+        this.snackBar.open("Posts not found!", "Ok");
+      }
     }, error => {
-      this.snackBar.open("Something went wrong!", "Ok", {duration: 5000});
+      this.snackBar.open("Posts not found!", "Ok");
+      this.results = [];
     })
   }
 
@@ -201,4 +210,5 @@ export class ViewAllComponent {
     const byteArray = new Uint8Array(byteNumbers);
     return new Blob([byteArray], { type: mimeType });
   }
+
 }

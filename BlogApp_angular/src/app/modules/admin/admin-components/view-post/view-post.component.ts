@@ -96,7 +96,7 @@ export class ViewPostComponent {
       this.getCommentsByPostId();
     }, error =>{
       console.error('Error fetching post:', error);
-      this.snackBar.open("Something went wrong!", "OK");
+      this.snackBar.open("Something went wrong!", "OK", { duration: 3000 });
     })
   }
 
@@ -104,7 +104,7 @@ export class ViewPostComponent {
     this.adminService.getCommentsByPostId(this.postId).subscribe(res=>{
       this.comments = res;
     }, error =>{
-      this.snackBar.open("Something went wrong!", "OK");
+      this.snackBar.open("Something went wrong!", "OK", { duration: 3000 });
     })
   }
 

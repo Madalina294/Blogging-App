@@ -29,20 +29,8 @@ export class UserService {
     });
   }
 
-  getPostsByName(name: string): Observable<any>{
-    return this.http.get(BASE_URL + `api/user/post/search/${name}`, {
-      headers: this.createAuthorizationHeader()
-    });
-  }
-
   likePost(postId: number): Observable<any>{
     return this.http.put(BASE_URL + `api/user/post/like/${postId}`, {}, {
-      headers: this.createAuthorizationHeader()
-    });
-  }
-
-  getCommentsByPostId(postId: number): Observable<any>{
-    return this.http.get(BASE_URL + `api/user/post/${postId}/comments`, {
       headers: this.createAuthorizationHeader()
     });
   }
@@ -54,6 +42,18 @@ export class UserService {
 
     return this.http.post(BASE_URL + `api/user/comment`, params, {
       headers: this.createAuthorizationHeader().set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+
+  searchPosts(searchTerm: string): Observable<any>{
+    return this.http.get(BASE_URL + `api/user/post/search/${searchTerm}`, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+
+  getCommentsByPostId(postId: number): Observable<any>{
+    return this.http.get(BASE_URL + `api/user/post/${postId}/comments`, {
+      headers: this.createAuthorizationHeader()
     });
   }
 

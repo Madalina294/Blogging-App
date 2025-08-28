@@ -4,7 +4,7 @@
       <div mat-card-avatar class="example-header-image"></div>
       <mat-card-title style="color: white">{{ postData.name }}</mat-card-title>
       <mat-card-subtitle
-      >Posted by: {{ postData.postedBy }} | Posted On:
+        >Posted by: {{ postData.postedBy }} | Posted On:
         {{ postData.date | date : "medium" }}</mat-card-subtitle
       >
     </mat-card-header>
@@ -41,8 +41,8 @@
       </mat-grid-tile>
     </mat-grid-list>
     <mat-card-content style="color: white">{{
-        postData.content
-      }}</mat-card-content>
+      postData.content
+    }}</mat-card-content>
     <mat-chip-set>
       <mat-chip *ngFor="let tag of postData.tags">{{ tag }}</mat-chip>
     </mat-chip-set>
@@ -68,7 +68,7 @@
           <button
             mat-raised-button
             color="primary"
-            style="float: right; margin-right: 60px;"
+            style="float: right; margin-right: 60px"
             [disabled]="!commentForm.valid"
             (click)="publishComment()"
           >
@@ -78,17 +78,22 @@
       </div>
     </mat-card-content>
   </mat-card>
-  <br>
+  <br />
   <!-- Comments Section -->
-  <mat-card class="comments-section" *ngIf="comments && comments.length > 0" style="background-color: #e395bc">
+  <mat-card
+    class="comments-section"
+    *ngIf="comments && comments.length > 0"
+    style="background-color: #e395bc"
+  >
     <mat-card-content>
       <h4>Comments ({{ comments.length }})</h4>
       <div class="comment-item" *ngFor="let comment of comments">
         <div class="comment-header">
-          <strong>{{ comment.postedBy }}</strong><span> | </span>
+          <strong>{{ comment.postedBy }}</strong
+          ><span> | </span>
           <span class="comment-date">{{
-              comment.postedOn | date : "medium"
-            }}</span>
+            comment.postedOn | date : "medium"
+          }}</span>
         </div>
         <div class="comment-content">
           {{ comment.content }}
@@ -97,4 +102,3 @@
     </mat-card-content>
   </mat-card>
 </div>
-

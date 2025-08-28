@@ -1,6 +1,8 @@
 <div class="search-form">
   <mat-form-field appearance="outline" class="search-input">
-    <mat-label style="color: black">Search by a word</mat-label>
+    <mat-label style="color: black"
+    >Search by a word</mat-label
+    >
     <input matInput [(ngModel)]="postTerm" />
     <button
       mat-button
@@ -18,7 +20,7 @@
           <div mat-card-avatar class="example-header-image"></div>
           <mat-card-title style="color: white">{{ item.name }}</mat-card-title>
           <mat-card-subtitle
-            >Posted By: {{ item.postedBy }} | Posted On:
+          >Posted By: {{ item.postedBy }} | Posted On:
             {{ item.date | date : "medium" }}</mat-card-subtitle
           >
         </mat-card-header>
@@ -79,7 +81,7 @@
             mat-raised-button
             color="primary"
             style="margin-left: 5px"
-            routerLink="/user/view-post/{{ item.id }}"
+            routerLink="/admin/view-post/{{ item.id }}"
           >
             View Post
           </button>

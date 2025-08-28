@@ -6,22 +6,11 @@
   >
     <mat-icon>menu</mat-icon>
   </button>
-  <span>My App</span>
+  <span>Blog App</span>
   <span class="example-spacer"></span>
   <div *ngIf="isAdminLoggedIn">
-    <button
-      mat-raised-button
-      color="primary"
-      routerLink="/admin/view-all"
-    >
-      View All Posts
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      routerLink=""
-    >
-      <mat-icon>search</mat-icon>
+    <button mat-raised-button color="primary" routerLink="/admin/search">
+      <mat-icon>search</mat-icon>Search
     </button>
     <button
       mat-raised-button
@@ -33,27 +22,12 @@
     </button>
   </div>
   <div *ngIf="isCustomerLoggedIn">
-    <button
-      mat-raised-button
-      color="primary"
-      routerLink="/user/create-post"
-    >
+    <button mat-raised-button color="primary" routerLink="/user/create-post">
       Create a Post
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      routerLink="/user/view-all"
-    >
-      View All Posts
-    </button>
 
-    <button
-      mat-raised-button
-      color="primary"
-      routerLink="/user/search"
-    >
-      <mat-icon>search</mat-icon>
+    <button mat-raised-button color="primary" routerLink="/user/search">
+      <mat-icon>search</mat-icon>Search
     </button>
 
     <button
@@ -75,17 +49,12 @@
     Log In
   </button>
 
-  <button
-    mat-icon-button
-    class="example-icon favorite-icon"
-    aria-label="Example icon-button with heart icon"
-  >
-    <mat-icon>favorite</mat-icon>
-  </button>
+  <span class="user">{{ userName }}</span>
   <button
     mat-icon-button
     class="example-icon"
     aria-label="Example icon-button with share icon"
+    (click)="shareSite()"
   >
     <mat-icon>share</mat-icon>
   </button>

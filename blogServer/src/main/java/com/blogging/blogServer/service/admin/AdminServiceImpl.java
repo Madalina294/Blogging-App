@@ -79,4 +79,9 @@ public class AdminServiceImpl implements AdminService {
         }
         else throw new EntityNotFoundException("Post not found");
     }
+
+    @Override
+    public List<PostDto> searchPosts(String searchTerm) {
+        return postRepository.searchPostsByTerm(searchTerm).stream().map(Post::getPostDto).collect(Collectors.toList());
+    }
 }
