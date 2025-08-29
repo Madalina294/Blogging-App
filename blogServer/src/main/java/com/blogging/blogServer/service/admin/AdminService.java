@@ -12,4 +12,5 @@ public interface AdminService {
     public boolean createComment(Long postId, String content);
     public List<CommentDto> getCommentsByPostId(Long postId);
     public List<PostDto> searchPosts(String searchTerm);
+    public void deletePost(Long postId);
 }

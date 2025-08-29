@@ -15,4 +15,5 @@ public interface SimpleUserService {
     public boolean createComment(Long id, String content);
     public List<CommentDto> getCommentsByPostId(Long postId);
     public List<PostDto> searchPosts(String searchTerm);
+    public void deletePost(Long id);
 }

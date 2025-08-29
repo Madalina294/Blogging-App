@@ -34,6 +34,11 @@ export class AdminServiceService {
       headers: this.createAuthorizationHeader()
     });
   }
+  deletePost(postId: number): Observable<any>{
+    return this.http.delete(BASE_URL + `api/admin/post/delete/${postId}`, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
 
   createComment(postId: number, content: string): Observable<any> {
     const params = new URLSearchParams();

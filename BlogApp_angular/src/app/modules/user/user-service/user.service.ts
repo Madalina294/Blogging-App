@@ -57,6 +57,12 @@ export class UserService {
     });
   }
 
+  deletePos(postId: number): Observable<any>{
+    return this.http.delete(BASE_URL + `api/user/post/delete/${postId}`, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+
 
   createAuthorizationHeader(): HttpHeaders{
     let authHeaders: HttpHeaders = new HttpHeaders();

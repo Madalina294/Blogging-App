@@ -61,6 +61,16 @@ export class ViewAllComponent {
     })
   }
 
+  deletePost(postId: number){
+
+    this.adminService.deletePost(postId).subscribe((res)=>{
+      this.snackBar.open("Post deleted successfully!", "Ok");
+      this.getAllPosts();
+    }, error => {
+      this.snackBar.open("Something went wrong!", "Ok", {duration: 3000})
+    })
+  }
+
   hasFile(post: any): boolean {
     return post.returnedFile && post.returnedFile.length > 0;
   }

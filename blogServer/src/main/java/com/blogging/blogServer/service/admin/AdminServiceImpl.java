@@ -84,4 +84,13 @@ public class AdminServiceImpl implements AdminService {
     public List<PostDto> searchPosts(String searchTerm) {
         return postRepository.searchPostsByTerm(searchTerm).stream().map(Post::getPostDto).collect(Collectors.toList());
     }
+
+    @Override
+    public void deletePost(Long postId) {
+        Optional<Post> post = postRepository.findById(postId);
+        if(post.isPresent()) {
+            postRepository.delete(post.get());
+        }
+        else throw new EntityNotFoundException("Post not found");
+    }
 }

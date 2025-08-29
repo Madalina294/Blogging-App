@@ -65,4 +65,11 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
+    @DeleteMapping("/post/delete/{id}")
+    public ResponseEntity<?> deletePost(@PathVariable("id") Long postId){
+        adminService.deletePost(postId);
+        return ResponseEntity.ok(null);
+    }
+
 }

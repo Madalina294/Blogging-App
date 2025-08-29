@@ -128,6 +128,15 @@ public class SimpleUserServiceImpl implements SimpleUserService {
         return postRepository.searchPostsByTerm(searchTerm).stream().map(Post::getPostDto).collect(Collectors.toList());
     }
 
+    @Override
+    public void deletePost(Long id) {
+       Optional<Post> post = postRepository.findById(id);
+       if(post.isPresent()) {
+           postRepository.delete(post.get());
+       }
+       else throw new EntityNotFoundException("Post not found");
+    }
+
 
 }
 
