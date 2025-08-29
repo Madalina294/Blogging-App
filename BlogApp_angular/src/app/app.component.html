@@ -35,6 +35,10 @@
         <mat-icon>list</mat-icon>
         <span>View All Posts</span>
       </button>
+      <button mat-menu-item routerLink="/user/my-account">
+        <mat-icon>person</mat-icon>
+        <span>My account</span>
+      </button>
       <button mat-menu-item routerLink="/user/search">
         <mat-icon>search</mat-icon>
         <span>Search</span>
@@ -57,37 +61,6 @@
 
   <span>Blog App</span>
   <span class="example-spacer"></span>
-  <div *ngIf="isAdminLoggedIn">
-    <button mat-raised-button color="primary" routerLink="/admin/search">
-      <mat-icon>search</mat-icon>Search
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      routerLink="/login"
-      (click)="logout()"
-    >
-      Log Out
-    </button>
-  </div>
-  <div *ngIf="isCustomerLoggedIn">
-    <button mat-raised-button color="primary" routerLink="/user/create-post">
-      Create a Post
-    </button>
-
-    <button mat-raised-button color="primary" routerLink="/user/search">
-      <mat-icon>search</mat-icon>Search
-    </button>
-
-    <button
-      mat-raised-button
-      color="primary"
-      routerLink="/login"
-      (click)="logout()"
-    >
-      Log Out
-    </button>
-  </div>
 
   <button
     mat-raised-button
@@ -98,7 +71,8 @@
     Log In
   </button>
 
-  <span class="user">{{ userName }}</span>
+  <a href="/user/my-account" class="user" *ngIf="isCustomerLoggedIn || isAdminLoggedIn">{{ userName }}
+    <mat-icon style="padding-left: 5px; padding-top: 5px">person</mat-icon></a>
   <button
     mat-icon-button
     class="example-icon"

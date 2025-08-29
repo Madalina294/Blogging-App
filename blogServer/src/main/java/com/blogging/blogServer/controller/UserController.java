@@ -97,4 +97,13 @@ public class UserController {
         simpleUserService.deletePost(postId);
         return ResponseEntity.ok(null);
     }
+
+    @GetMapping("/my-posts/{userId}")
+    public ResponseEntity<?> getMyPosts(@PathVariable("userId") Long userId){
+        try{
+            return ResponseEntity.ok(simpleUserService.getPostsByUserId(userId));
+        } catch(EntityNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }

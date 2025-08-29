@@ -137,6 +137,16 @@ public class SimpleUserServiceImpl implements SimpleUserService {
        else throw new EntityNotFoundException("Post not found");
     }
 
+    @Override
+    public List<PostDto> getPostsByUserId(Long userId) {
+
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if(optionalUser.isPresent()) {
+            return postRepository.getPostByUserId(userId).stream().map(Post::getPostDto).collect(Collectors.toList());
+        }
+        else throw new EntityNotFoundException("User not found");
+    }
+
 
 }
 

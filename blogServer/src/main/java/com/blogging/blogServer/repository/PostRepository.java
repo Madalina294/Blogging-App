@@ -14,4 +14,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
            "OR LOWER(p.content) LIKE LOWER(CONCAT('%', :searchTerm, '%')) " +
            "OR LOWER(p.postedBy) LIKE LOWER(CONCAT('%', :searchTerm, '%'))")
     List<Post> searchPostsByTerm(@Param("searchTerm") String searchTerm);
+
+    List<Post> getPostByUserId(Long userId);
 }

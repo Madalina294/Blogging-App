@@ -40,8 +40,8 @@ export class AppComponent {
 
   shareSite() {
     const currentUrl = window.location.href;
-    
-    // try use Web Share API 
+
+    // try use Web Share API
     if (navigator.share) {
       navigator.share({
         title: 'Blog App',

@@ -16,4 +16,5 @@ public interface SimpleUserService {
     public List<CommentDto> getCommentsByPostId(Long postId);
     public List<PostDto> searchPosts(String searchTerm);
     public void deletePost(Long id);
+    public List<PostDto> getPostsByUserId(Long userId);
 }

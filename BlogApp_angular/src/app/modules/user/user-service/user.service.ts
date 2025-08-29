@@ -57,15 +57,21 @@ export class UserService {
     });
   }
 
-  deletePos(postId: number): Observable<any>{
+  deletePost(postId: number): Observable<any>{
     return this.http.delete(BASE_URL + `api/user/post/delete/${postId}`, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+
+  getMyPosts(userId: number): Observable<any>{
+    return this.http.get(BASE_URL + `api/user/my-posts/${userId}`, {
       headers: this.createAuthorizationHeader()
     });
   }
 
 
   createAuthorizationHeader(): HttpHeaders{
-    let authHeaders: HttpHeaders = new HttpHeaders();
+   /* let authHeaders: HttpHeaders = new HttpHeaders();
     const token = StorageService.getToken();
     console.log('Token from storage:', token);
     if (!token) {
@@ -74,6 +80,11 @@ export class UserService {
     }
     const authHeader = 'Bearer ' + token;
     console.log('Authorization header:', authHeader);
-    return authHeaders.set('Authorization', authHeader);
+    return authHeaders.set('Authorization', authHeader);*/
+    let authHeaders: HttpHeaders = new HttpHeaders();
+    return authHeaders.set(
+      'Authorization',
+      'Bearer '+ StorageService.getToken()
+    );
   }
 }
