@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.blogging.blogServer.dto.CommentDto;
 import com.blogging.blogServer.dto.PostDto;
+import com.blogging.blogServer.dto.UpdateProfileRequest;
+import com.blogging.blogServer.dto.UserDto;
 import com.blogging.blogServer.entity.Post;
 
 public interface SimpleUserService {
@@ -17,4 +19,6 @@ public interface SimpleUserService {
     public List<PostDto> searchPosts(String searchTerm);
     public void deletePost(Long id);
     public List<PostDto> getPostsByUserId(Long userId);
+    public UserDto updateProfile(Long userId, UpdateProfileRequest updatedUser);
+
 }

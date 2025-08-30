@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.blogging.blogServer.dto.UpdateProfileRequest;
+import com.blogging.blogServer.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.blogging.blogServer.dto.CommentDto;
@@ -31,6 +34,9 @@ public class SimpleUserServiceImpl implements SimpleUserService {
     private UserRepository userRepository;
     @Autowired
     private CommentRepository commentRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public boolean savePost(PostDto postDto) throws IOException{
         // Obține utilizatorul curent din contextul de securitate
@@ -145,6 +151,37 @@ public class SimpleUserServiceImpl implements SimpleUserService {
             return postRepository.getPostByUserId(userId).stream().map(Post::getPostDto).collect(Collectors.toList());
         }
         else throw new EntityNotFoundException("User not found");
+    }
+
+    @Override
+    public UserDto updateProfile(Long userId, UpdateProfileRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        // Verifică dacă email-ul nou este deja folosit de alt utilizator
+        if (!user.getEmail().equals(request.getEmail())) {
+            Optional<User> existingUser = userRepository.findFirstByEmail(request.getEmail());
+            if (existingUser.isPresent()) {
+                throw new IllegalArgumentException("Email already exists");
+            }
+        }
+
+        // Actualizează câmpurile
+        user.setName(request.getName());
+        user.setEmail(request.getEmail());
+
+        // Actualizează password-ul doar dacă este furnizat
+        if (request.getPassword() != null && !request.getPassword().isEmpty()
+         && request.getPassword().equals(request.getConfirmPassword())) {
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+        }
+
+        if(!request.getPassword().equals(request.getConfirmPassword())){
+            throw new IllegalArgumentException("Passwords do not match");
+        }
+
+        User savedUser = userRepository.save(user);
+        return savedUser.getUserDto();
     }
 
 

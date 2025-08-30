@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import com.blogging.blogServer.dto.UpdateProfileRequest;
+import com.blogging.blogServer.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -99,11 +101,29 @@ public class UserController {
     }
 
     @GetMapping("/my-posts/{userId}")
-    public ResponseEntity<?> getMyPosts(@PathVariable("userId") Long userId){
-        try{
+    public ResponseEntity<?> getMyPosts(@PathVariable("userId") Long userId) {
+        try {
             return ResponseEntity.ok(simpleUserService.getPostsByUserId(userId));
-        } catch(EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+    
+    @PutMapping("/update-profile/{userId}")
+    public ResponseEntity<?> updateProfile(@PathVariable Long userId, 
+                                        @RequestBody UpdateProfileRequest request) {
+        try {
+            UserDto updatedUser = simpleUserService.updateProfile(userId, request);
+            return ResponseEntity.ok(updatedUser);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Map.of("error", e.getMessage()));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("error", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("error", "Error updating profile"));
         }
     }
 }

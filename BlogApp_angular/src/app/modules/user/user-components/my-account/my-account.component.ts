@@ -6,6 +6,7 @@ import {RouterLink} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {UserService} from '../../user-service/user.service';
 import {StorageService} from '../../../../auth/services/storage/storage.service';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-my-account',
@@ -18,7 +19,8 @@ import {StorageService} from '../../../../auth/services/storage/storage.service'
     NgIf,
     RouterLink,
     MatCardTitle,
-    MatCardSubtitle
+    MatCardSubtitle,
+    MatIcon
   ],
   templateUrl: './my-account.component.html',
   styleUrl: './my-account.component.scss'
@@ -27,6 +29,8 @@ export class MyAccountComponent {
   username: string = "";
   numberOfPosts: number = 0;
   posts: any = [];
+  numberOfLikes: number = 0;
+  numberOfViews: number = 0;
 
   constructor(private snackBar: MatSnackBar,
               private userService: UserService) {
@@ -44,6 +48,11 @@ export class MyAccountComponent {
         this.posts = res;
         console.log(res);
         this.numberOfPosts = this.posts.length;
+        for(var post of this.posts){
+          this.numberOfLikes += post.likeCount;
+          this.numberOfViews += post.viewCount;
+        }
+        console.log(this.numberOfViews);
       })
     }
   }

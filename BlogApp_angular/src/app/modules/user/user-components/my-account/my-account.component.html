@@ -1,28 +1,70 @@
-<div style="margin-left: 20px; margin-top: 20px">
-  <div>
-    <h2 style="font-style: italic; text-decoration: underline; color: #e395bc">{{username}}</h2>
-    <h3>{{numberOfPosts}} posts</h3>
+<div class="my-account-container">
+  <div class="user-info-section">
+    <div class="user-header">
+      <div class="user-avatar">
+        <mat-icon>person</mat-icon>
+      </div>
+      <h2 class="username">{{ username }}</h2>
+    </div>
+
+    <div class="user-stats">
+      <div class="stat-card">
+        <div class="stat-number">{{ numberOfPosts }}</div>
+        <div class="stat-label">
+          <mat-icon>article</mat-icon>
+          <span>Posts</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-number">{{ numberOfLikes }}</div>
+        <div class="stat-label">
+          <mat-icon>favorite</mat-icon>
+          <span>Likes</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-number">{{ numberOfViews }}</div>
+        <div class="stat-label">
+          <mat-icon>visibility</mat-icon>
+          <span>Views</span>
+        </div>
+      </div>
+    </div>
   </div>
-  <div *ngIf="numberOfPosts > 0">
-    <div *ngFor="let post of posts">
-      <mat-card appearance="outlined" style="background-color: #e395bc; border: none; width: 90%">
-        <mat-card-header>
-          <mat-card-title>{{post.name}}</mat-card-title>
-          <mat-card-subtitle>{{
+
+  <div class="posts-section">
+    <h3 class="section-title">My posts</h3>
+
+    <div *ngIf="numberOfPosts > 0" class="posts-grid">
+      <div *ngFor="let post of posts" class="post-card">
+        <mat-card appearance="outlined">
+          <mat-card-header>
+            <mat-card-title>{{ post.name }}</mat-card-title>
+            <mat-card-subtitle>{{
               post.content.length > 100
                 ? post.content.substring(0, 100) + "..."
                 : post.content
             }}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-actions align="end">
-          <button mat-button routerLink="/user/view-post/{{post.id}}">View Post</button>
-        </mat-card-actions>
-      </mat-card>
-      <br>
+          </mat-card-header>
+          <mat-card-actions align="end">
+            <button mat-button routerLink="/user/view-post/{{ post.id }}">
+              <mat-icon>visibility</mat-icon>
+              View post
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+
+    <div *ngIf="numberOfPosts == 0" class="no-posts">
+      <mat-icon>article</mat-icon>
+      <p>No posts yet</p>
+      <button mat-raised-button color="primary" routerLink="/user/create-post">
+        <mat-icon>add</mat-icon>
+        Create your first post
+      </button>
     </div>
   </div>
-  <div *ngIf="numberOfPosts == 0">
-    <p>No posts yet</p>
-  </div>
-
 </div>
