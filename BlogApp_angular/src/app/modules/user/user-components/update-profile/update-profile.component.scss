@@ -27,3 +27,53 @@ mat-card-title {
 mat-form-field {
   margin-bottom: 16px;
 }
+mat-card{
+  background: white;
+}
+
+mat-label{
+  color: #667eea;
+}
+mat-card-actions {
+  padding: 15px 20px 20px 20px;
+  background: rgba(255, 255, 255, 0.5);
+
+  button {
+    background: linear-gradient(135deg, #e395bc, #d17ba8);
+    color: white;
+    border-radius: 25px;
+    padding: 8px 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: linear-gradient(135deg, #d17ba8, #c06a9a);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(227, 149, 188, 0.4);
+    }
+
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+button {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border-radius: 30px;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+  }
+
+  mat-icon {
+    margin-right: 10px;
+  }
+}
+

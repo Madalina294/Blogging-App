@@ -59,7 +59,7 @@ export class UpdateProfileComponent implements OnInit{
   private initForm() {
     this.updateForm = this.fb.group({
       name: [this.currentUser?.name || '', [Validators.required, Validators.minLength(2)]],
-      email: [this.currentUser?.email || '', [Validators.required, Validators.email]],
+      email: [this.currentUser?.email || '', [Validators.email]],
       password: ['', [
         // Validare opțională - doar dacă parola nu este goală
         this.conditionalPasswordValidator()
@@ -71,23 +71,23 @@ export class UpdateProfileComponent implements OnInit{
   private conditionalPasswordValidator() {
     return (control: AbstractControl): ValidationErrors | null => {
       const password = control.value;
-      
+
       // Dacă parola este goală, nu este o eroare (este opțională)
       if (!password || password.trim() === '') {
         return null;
       }
-      
+
       // Dacă parola nu este goală, validează pattern-ul
       const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
       if (!passwordPattern.test(password)) {
-        return { 
+        return {
           pattern: {
             requiredPattern: 'At least 8 characters, 1 lowercase, 1 uppercase, 1 number and 1 special character',
             actualValue: password
           }
         };
       }
-      
+
       return null;
     };
   }
@@ -95,7 +95,7 @@ export class UpdateProfileComponent implements OnInit{
   private passwordMatchValidator = (group: AbstractControl): ValidationErrors | null => {
     const password = group.get('password');
     const confirm = group.get('confirmPassword');
-    
+
     if (!password || !confirm) {
       return null;
     }
@@ -134,10 +134,10 @@ export class UpdateProfileComponent implements OnInit{
 
     // Curăță datele înainte de trimitere
     const cleanedFormData = this.cleanFormData(formData);
-    
+
     console.log('Form data before cleaning:', formData);
     console.log('Form data after cleaning:', cleanedFormData);
-    
+
     this.userService.updateProfile(userId, cleanedFormData).subscribe({
       next: (response: any) => {
         // Actualizează StorageService cu noile date și token-ul
@@ -168,7 +168,7 @@ export class UpdateProfileComponent implements OnInit{
 
   private cleanFormData(formData: any): any {
     const cleaned = { ...formData };
-    
+
     // Dacă parola este goală, nu o trimite deloc și elimină confirmPassword
     if (!cleaned.password || cleaned.password.trim() === '') {
       delete cleaned.password;
@@ -176,7 +176,7 @@ export class UpdateProfileComponent implements OnInit{
     }
     // Dacă parola nu este goală, păstrează confirmPassword pentru validarea backend
     // confirmPassword va fi eliminat automat de backend după validare
-    
+
     return cleaned;
   }
   private markFormGroupTouched() {
