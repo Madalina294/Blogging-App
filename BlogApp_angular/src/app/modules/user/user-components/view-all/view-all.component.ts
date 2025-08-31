@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {UserService} from '../../user-service/user.service';
+import { UpdateNotificationService } from '../../../../shared/services/update-notification.service';
+import { Subscription } from 'rxjs';
 import {
   MatCard, MatCardActions,
   MatCardAvatar,
@@ -40,15 +42,30 @@ import {RouterLink} from '@angular/router';
   templateUrl: './view-all.component.html',
   styleUrl: './view-all.component.scss'
 })
-export class ViewAllComponent {
+export class ViewAllComponent implements OnInit, OnDestroy {
 
   allPosts: any[] = [];
-  constructor(private snackBar: MatSnackBar,
-    private postService: UserService) {
-  }
+  private subscription: Subscription = new Subscription();
+
+  constructor(
+    private snackBar: MatSnackBar,
+    private postService: UserService,
+    private updateNotificationService: UpdateNotificationService
+  ) {}
 
   ngOnInit() {
     this.getAllPosts();
+    
+    // Ascultă notificările de actualizare a profilului
+    this.subscription.add(
+      this.updateNotificationService.profileUpdated$.subscribe(() => {
+        this.getAllPosts(); // Reîncarcă postările când se actualizează profilul
+      })
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   getAllPosts() {

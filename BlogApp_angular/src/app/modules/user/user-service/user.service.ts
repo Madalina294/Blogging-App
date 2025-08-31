@@ -69,22 +69,22 @@ export class UserService {
     });
   }
 
+  updateProfile(userId: number, formData: any): Observable<any>{
+    return this.http.put(BASE_URL + `api/user/update-profile/${userId}`, formData, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+
 
   createAuthorizationHeader(): HttpHeaders{
-   /* let authHeaders: HttpHeaders = new HttpHeaders();
     const token = StorageService.getToken();
-    console.log('Token from storage:', token);
     if (!token) {
       console.error('No token found in storage');
-      return authHeaders;
+      return new HttpHeaders();
     }
-    const authHeader = 'Bearer ' + token;
-    console.log('Authorization header:', authHeader);
-    return authHeaders.set('Authorization', authHeader);*/
-    let authHeaders: HttpHeaders = new HttpHeaders();
-    return authHeaders.set(
-      'Authorization',
-      'Bearer '+ StorageService.getToken()
-    );
+    
+    return new HttpHeaders({
+      'Authorization': 'Bearer ' + token
+    });
   }
 }

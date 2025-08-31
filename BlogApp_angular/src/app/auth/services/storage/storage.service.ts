@@ -98,4 +98,46 @@ export class StorageService {
     window.localStorage.removeItem(USER);
     window.localStorage.removeItem(TOKEN);
   }
+
+  static updateUserProfile(updatedUser: any): void {
+    if (!this.isBrowser()) return;
+    
+    // Obține utilizatorul curent
+    const currentUser = this.getUser();
+    if (!currentUser) return;
+    
+    // Actualizează doar câmpurile furnizate, păstrează restul
+    const updatedUserData = {
+      ...currentUser,
+      name: updatedUser.name || currentUser.name,
+      email: updatedUser.email || currentUser.email,
+      // Păstrează ID-ul și rolul original
+      id: currentUser.id,
+      role: currentUser.role
+    };
+    
+    // Salvează utilizatorul actualizat
+    this.saveUser(updatedUserData);
+    console.log('User profile updated in storage:', updatedUserData);
+  }
+
+  static updateUserProfileWithToken(updatedUser: any, newToken?: string): void {
+    if (!this.isBrowser()) return;
+    
+    // Actualizează profilul utilizatorului
+    this.updateUserProfile(updatedUser);
+    
+    // Actualizează token-ul dacă este furnizat
+    if (newToken) {
+      this.saveToken(newToken);
+      console.log('Token updated in storage:', newToken);
+    }
+  }
+
+  static getUserEmail(): string {
+    if (!this.isBrowser()) return '';
+    const user = this.getUser();
+    if (user === null) return '';
+    return user.email || '';
+  }
 }

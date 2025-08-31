@@ -1,0 +1,91 @@
+<!-- update-profile.component.html -->
+<mat-card class="update-profile-card">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>edit</mat-icon>
+      Update profile
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" placeholder="Enter your name" />
+        <mat-error *ngIf="hasNameError('required')">
+          The name is required!
+        </mat-error>
+        <mat-error *ngIf="hasNameError('minlength')">
+          Name should contain at least 2 characters!
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          placeholder="Enter your email"
+          type="email"
+        />
+        <mat-error *ngIf="hasEmailError('required')">
+          Email is required!
+        </mat-error>
+        <mat-error *ngIf="hasEmailError('email')">
+          Enter a valid email address!
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>New Password (optional)</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          placeholder="Leave empty to keep current password"
+          type="password"
+        />
+        <mat-hint
+          >Leave empty if you don't want to change your password</mat-hint
+        >
+        <mat-error *ngIf="hasPasswordError('pattern')">
+          Password should contain at least 8 characters, 1 lowercase, 1
+          uppercase, 1 number and 1 special character!
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Confirm password</mat-label>
+        <input
+          matInput
+          formControlName="confirmPassword"
+          placeholder="Confirm new password"
+          type="password"
+        />
+        <mat-hint>Only required if you're changing your password</mat-hint>
+        <mat-error *ngIf="hasConfirmPasswordError('passwordMismatch')">
+          Passwords do not match!
+        </mat-error>
+      </mat-form-field>
+
+      <div class="button-container">
+        <button
+          mat-button
+          type="button"
+          (click)="onCancel()"
+          [disabled]="isLoading"
+        >
+          Cancel
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="isLoading || updateForm.invalid"
+        >
+          <mat-icon *ngIf="isLoading">hourglass_empty</mat-icon>
+          {{ isLoading ? "Is updating..." : "Update" }}
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

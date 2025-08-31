@@ -1,0 +1,29 @@
+/* update-profile.component.scss */
+.update-profile-card {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #333;
+}
+
+mat-form-field {
+  margin-bottom: 16px;
+}

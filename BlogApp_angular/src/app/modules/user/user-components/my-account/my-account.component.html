@@ -34,6 +34,17 @@
     </div>
   </div>
 
+  <div class="user-header">
+    <div class="user-avatar">
+      <mat-icon>person</mat-icon>
+    </div>
+    <h2 class="username">{{ username }}</h2>
+    <button mat-raised-button color="accent" (click)="openUpdateProfileDialog()">
+      <mat-icon>edit</mat-icon>
+      My Infos
+    </button>
+  </div>
+
   <div class="posts-section">
     <h3 class="section-title">My posts</h3>
 

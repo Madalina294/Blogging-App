@@ -7,6 +7,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {UserService} from '../../user-service/user.service';
 import {StorageService} from '../../../../auth/services/storage/storage.service';
 import {MatIcon} from '@angular/material/icon';
+import {UpdateProfileComponent} from '../update-profile/update-profile.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-my-account',
@@ -33,7 +35,8 @@ export class MyAccountComponent {
   numberOfViews: number = 0;
 
   constructor(private snackBar: MatSnackBar,
-              private userService: UserService) {
+              private userService: UserService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit(){
@@ -57,4 +60,17 @@ export class MyAccountComponent {
     }
   }
 
+  openUpdateProfileDialog() {
+    const dialogRef = this.dialog.open(UpdateProfileComponent, {
+      width: '500px',
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Reîncarcă informațiile utilizatorului
+        this.getUserInfo();
+      }
+    });
+  }
 }

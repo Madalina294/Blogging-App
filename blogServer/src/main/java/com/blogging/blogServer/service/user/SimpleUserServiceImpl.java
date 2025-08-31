@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.blogging.blogServer.dto.UpdateProfileRequest;
-import com.blogging.blogServer.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,12 +14,15 @@ import org.springframework.stereotype.Service;
 
 import com.blogging.blogServer.dto.CommentDto;
 import com.blogging.blogServer.dto.PostDto;
+import com.blogging.blogServer.dto.UpdateProfileRequest;
+import com.blogging.blogServer.dto.UserDto;
 import com.blogging.blogServer.entity.Comment;
 import com.blogging.blogServer.entity.Post;
 import com.blogging.blogServer.entity.User;
 import com.blogging.blogServer.repository.CommentRepository;
 import com.blogging.blogServer.repository.PostRepository;
 import com.blogging.blogServer.repository.UserRepository;
+import com.blogging.blogServer.utils.JWTUtil;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -37,6 +38,9 @@ public class SimpleUserServiceImpl implements SimpleUserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JWTUtil jwtUtil;
 
     public boolean savePost(PostDto postDto) throws IOException{
         // Obține utilizatorul curent din contextul de securitate
@@ -166,22 +170,59 @@ public class SimpleUserServiceImpl implements SimpleUserService {
             }
         }
 
+        // Verifică dacă numele s-a schimbat
+        boolean nameChanged = !user.getName().equals(request.getName());
+
         // Actualizează câmpurile
         user.setName(request.getName());
         user.setEmail(request.getEmail());
 
-        // Actualizează password-ul doar dacă este furnizat
-        if (request.getPassword() != null && !request.getPassword().isEmpty()
-         && request.getPassword().equals(request.getConfirmPassword())) {
+        // Actualizează password-ul doar dacă este furnizat și valid
+        if (request.getPassword() != null && !request.getPassword().isEmpty()) {
+            // Verifică dacă confirmPassword este furnizat și se potrivește
+            if (request.getConfirmPassword() == null || !request.getPassword().equals(request.getConfirmPassword())) {
+                throw new IllegalArgumentException("Passwords do not match");
+            }
             user.setPassword(passwordEncoder.encode(request.getPassword()));
         }
 
-        if(!request.getPassword().equals(request.getConfirmPassword())){
-            throw new IllegalArgumentException("Passwords do not match");
+        User savedUser = userRepository.save(user);
+
+        // Dacă numele s-a schimbat, actualizează toate postările și comentariile utilizatorului
+        if (nameChanged) {
+            updateUserPostsAuthorName(userId, request.getName());
+            updateUserCommentsAuthorName(userId, request.getName());
         }
 
-        User savedUser = userRepository.save(user);
-        return savedUser.getUserDto();
+        UserDto userDto = savedUser.getUserDto();
+        
+        // Generează un nou JWT token cu noile credențiale
+        String newToken = jwtUtil.generateToken(savedUser);
+        userDto.setToken(newToken);
+        
+        return userDto;
+    }
+
+    /**
+     * Actualizează numele autorului în toate postările unui utilizator
+     */
+    private void updateUserPostsAuthorName(Long userId, String newAuthorName) {
+        List<Post> userPosts = postRepository.getPostByUserId(userId);
+        for (Post post : userPosts) {
+            post.setPostedBy(newAuthorName);
+        }
+        postRepository.saveAll(userPosts);
+    }
+
+    /**
+     * Actualizează numele autorului în toate comentariile unui utilizator
+     */
+    private void updateUserCommentsAuthorName(Long userId, String newAuthorName) {
+        List<Comment> userComments = commentRepository.findByUserId(userId);
+        for (Comment comment : userComments) {
+            comment.setPostedBy(newAuthorName);
+        }
+        commentRepository.saveAll(userComments);
     }
 
 
