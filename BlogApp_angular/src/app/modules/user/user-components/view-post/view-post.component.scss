@@ -1,86 +1,628 @@
-.card-container{
-  margin: 16px;
-  max-width: 60%;
-  padding-bottom: 30px;
+// Global Material Design Overrides for Comment Form
+::ng-deep {
+  .comment-card {
+    .mdc-text-field--filled {
+      background-color: #ffffff !important;
+      
+      &::before, &::after {
+        background-color: transparent !important;
+      }
+    }
+    
+    .mat-mdc-text-field-wrapper {
+      background-color: #ffffff !important;
+    }
+    
+    .mat-mdc-form-field-infix {
+      background-color: #ffffff !important;
+    }
+    
+    .mdc-text-field--filled .mdc-line-ripple::before {
+      border-bottom-color: #e9ecef !important;
+    }
+    
+    .mdc-text-field--filled .mdc-line-ripple::after {
+      border-bottom-color: #667eea !important;
+    }
+  }
 }
 
-mat-card{
-  padding: 10px;
+// View Post Page Container
+.card-container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
 }
 
-.example-header-image{
+// Main Post Card
+mat-card {
+  background: white;
+  border-radius: 20px;
+  border: none;
+  overflow: hidden;
+  margin-bottom: 25px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+}
+
+// Post Header Styling
+mat-card-header {
+  padding: 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="80" cy="80" r="1" fill="%23ffffff" opacity="0.05"/><circle cx="40" cy="60" r="1" fill="%23ffffff" opacity="0.08"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+    opacity: 0.3;
+  }
+}
+
+mat-card-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: white !important;
+  margin-bottom: 15px;
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 1;
+}
+
+mat-card-subtitle {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  font-weight: 400;
+  position: relative;
+  z-index: 1;
+}
+
+// Avatar Styling
+.example-header-image {
   background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
   background-size: cover;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
 }
 
-mat-card-content{
-  margin-top: 20px;
+// Post Content Styling
+mat-card-content {
+  padding: 30px;
+  color: #2c3e50;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  font-weight: 400;
+  background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+  
+  &:not(:last-child) {
+    border-bottom: 1px solid #e9ecef;
+  }
 }
 
-mat-card-footer{
-  margin-left: 20px;
-}
-.image-container {
+// Post Actions Styling
+mat-card-actions {
+  padding: 20px 30px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-top: 2px solid #e395bc;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
+  gap: 15px;
+  
+  button {
+    background: linear-gradient(135deg, #e395bc, #d17ba8);
+    color: white;
+    border-radius: 30px;
+    padding: 12px 24px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 12px rgba(227, 149, 188, 0.3);
+    
+    &:hover {
+      background: linear-gradient(135deg, #d17ba8, #c06a9a);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(227, 149, 188, 0.5);
+    }
+    
+    &:active {
+      transform: translateY(-1px);
+    }
+    
+    mat-icon {
+      margin-left: 8px;
+      font-size: 20px;
+    }
+  }
 }
 
-.post-img{
-  width: 300px;
-  height: 200px;
-  object-fit: cover;
-  margin-top: 15px;
+// Tags Section Styling
+mat-chip-set {
+  padding: 0 30px 20px 30px;
+  
+  mat-chip {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    font-weight: 500;
+    margin: 4px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+  }
 }
 
-.document-preview {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-.file-preview-card {
-  display: flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 15px;
-  border-radius: 8px;
-  min-width: 250px;
-}
-
-.file-icon {
-  font-size: 48px;
-  margin-right: 15px;
-  color: #fff;
-}
-
-.file-info {
-  flex: 1;
-}
-
-.file-name {
-  margin: 0;
-  font-weight: bold;
-  color: #fff;
-  font-size: 14px;
-}
-
-.file-type {
-  margin: 5px 0 0 0;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 12px;
-}
-
-.download-btn {
-  color: #fff;
-}
-
-.comment-card{
-  margin-top: 20px;
-}
-
-mat-form-file{
+// Media Content Styling
+.post-img {
   width: 100%;
+  max-width: 500px;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+  margin: 20px 0;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.image-container, .document-preview {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
+
+// File Preview Card Styling
+.file-preview-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 15px;
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  border: 2px solid #e9ecef;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    border-color: #667eea;
+  }
+  
+  .file-icon {
+    font-size: 50px;
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.1);
+    padding: 15px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+  
+  .file-info {
+    flex: 1;
+    
+    .file-name {
+      font-weight: 700;
+      color: #2c3e50;
+      margin: 0 0 8px 0;
+      font-size: 1.1rem;
+      line-height: 1.3;
+    }
+    
+    .file-type {
+      color: #667eea;
+      margin: 0;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+  }
+  
+  .download-btn {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 12px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: linear-gradient(135deg, #5a67d8, #6b46c1);
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    }
+    
+    mat-icon {
+      font-size: 24px;
+    }
+  }
+}
+
+// Divider Styling
+hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #e395bc, #667eea, transparent);
+  margin: 25px 0;
+  border-radius: 2px;
+}
+
+// Comments Section Styling
+.comment-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 20px;
+  margin-bottom: 25px;
+  
+  mat-card-content {
+    padding: 30px;
+    background: transparent;
+    
+    h4 {
+      color: #2c3e50;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #e395bc;
+      position: relative;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+      }
+    }
+    
+    form {
+      mat-form-field {
+        width: 100%;
+        margin-bottom: 20px;
+        background-color: #ffffff !important;
+        border-radius: 8px;
+        
+        mat-label {
+          color: #667eea !important;
+          font-weight: 500;
+        }
+        
+        .mdc-text-field {
+          background-color: #ffffff !important;
+        }
+        
+        .mdc-text-field--filled {
+          background-color: #ffffff !important;
+        }
+        
+        .mdc-text-field--outlined {
+          .mdc-notched-outline__leading,
+          .mdc-notched-outline__notch,
+          .mdc-notched-outline__trailing {
+            border-color: #e9ecef !important;
+          }
+          
+          &:hover .mdc-notched-outline__leading,
+          &:hover .mdc-notched-outline__notch,
+          &:hover .mdc-notched-outline__trailing {
+            border-color: #667eea !important;
+          }
+          
+          &.mdc-text-field--focused .mdc-notched-outline__leading,
+          &.mdc-text-field--focused .mdc-notched-outline__notch,
+          &.mdc-text-field--focused .mdc-notched-outline__trailing {
+            border-color: #667eea !important;
+            border-width: 2px !important;
+          }
+        }
+        
+        textarea {
+          min-height: 100px;
+          font-size: 1rem;
+          line-height: 1.6;
+          background-color: #ffffff !important;
+          color: #2c3e50 !important;
+          border: 1px solid #e9ecef;
+          border-radius: 8px;
+          padding: 12px;
+          
+          &:focus {
+            background-color: #ffffff !important;
+            border-color: #667eea;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+          }
+          
+          &::placeholder {
+            color: #6c757d;
+          }
+        }
+        
+        ::ng-deep .mat-mdc-form-field {
+          background-color: transparent !important;
+          
+          .mat-mdc-text-field-wrapper {
+            background-color: #ffffff !important;
+            border-radius: 8px !important;
+          }
+          
+          .mat-mdc-form-field-flex {
+            background-color: #ffffff !important;
+          }
+          
+          .mat-mdc-form-field-infix {
+            background-color: #ffffff !important;
+          }
+          
+          .mat-mdc-form-field-focus-overlay {
+            background-color: transparent !important;
+          }
+          
+          .mdc-text-field--filled {
+            background-color: #ffffff !important;
+            
+            &::before {
+              background-color: transparent !important;
+            }
+            
+            &::after {
+              background-color: #667eea !important;
+            }
+          }
+          
+          .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+            background-color: #ffffff !important;
+          }
+          
+          .mdc-text-field--filled .mdc-line-ripple::before {
+            border-bottom-color: #e9ecef !important;
+          }
+          
+          .mdc-text-field--filled .mdc-line-ripple::after {
+            border-bottom-color: #667eea !important;
+          }
+          
+          .mdc-text-field--filled .mdc-floating-label {
+            color: #667eea !important;
+          }
+          
+          .mdc-text-field--filled.mdc-text-field--focused .mdc-floating-label {
+            color: #667eea !important;
+          }
+        }
+      }
+      
+      button {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border-radius: 25px;
+        padding: 12px 30px;
+        font-weight: 600;
+        font-size: 1rem;
+        border: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        
+        &:hover:not(:disabled) {
+          background: linear-gradient(135deg, #5a67d8, #6b46c1);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        &:disabled {
+          background: #ccc;
+          transform: none;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}
+
+.comments-section {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 20px;
+  
+  mat-card-content {
+    padding: 30px;
+    background: transparent;
+    
+    h4 {
+      color: #2c3e50;
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      
+      &::before {
+        content: '💬';
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+
+.comment-item {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 15px;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-color: #e395bc;
+  }
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f1f3f4;
+  
+  strong {
+    color: #667eea;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  
+  span {
+    color: #6c757d;
+    margin: 0 8px;
+  }
+  
+  .comment-date {
+    color: #6c757d;
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+}
+
+.comment-content {
+  color: #2c3e50;
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .card-container {
+    max-width: 100%;
+    margin: 10px;
+    padding: 15px;
+    background: #f5f7fa;
+  }
+  
+  mat-card {
+    margin-bottom: 20px;
+  }
+  
+  mat-card-header {
+    padding: 20px;
+  }
+  
+  mat-card-title {
+    font-size: 1.5rem;
+  }
+  
+  mat-card-subtitle {
+    font-size: 1rem;
+  }
+  
+  mat-card-content {
+    padding: 20px;
+  }
+  
+  mat-card-actions {
+    padding: 15px 20px;
+    flex-wrap: wrap;
+    
+    button {
+      padding: 10px 20px;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+  }
+  
+  .post-img {
+    max-width: 100%;
+    max-height: 250px;
+  }
+  
+  .file-preview-card {
+    max-width: 100%;
+    padding: 20px;
+  }
+  
+  .comment-card mat-card-content,
+  .comments-section mat-card-content {
+    padding: 20px;
+  }
+  
+  .comment-item {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-container {
+    margin: 5px;
+    padding: 10px;
+  }
+  
+  mat-card-header {
+    padding: 15px;
+  }
+  
+  mat-card-title {
+    font-size: 1.3rem;
+  }
+  
+  mat-card-content {
+    padding: 15px;
+  }
+  
+  mat-card-actions {
+    padding: 15px;
+    
+    button {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+  
+  mat-grid-list {
+    flex-direction: column;
+  }
+  
+  .file-preview-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
 }

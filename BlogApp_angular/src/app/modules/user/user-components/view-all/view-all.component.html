@@ -1,8 +1,8 @@
 <div class="card-container" *ngFor="let item of allPosts">
-  <mat-card style="background-color: #e395bc">
+  <mat-card>
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title style="color: white">{{ item.name }}</mat-card-title>
+      <mat-card-title>{{ item.name }}</mat-card-title>
       <mat-card-subtitle
         >Posted By: {{ item.postedBy }} | Posted On:
         {{ item.date | date : "medium" }}</mat-card-subtitle
@@ -43,7 +43,7 @@
         </mat-grid-tile>
       </div>
       <mat-grid-tile [colspan]="3" [rowspan]="1">
-        <mat-card-content style="color: white">
+        <mat-card-content>
           {{
             item.content.length > 600
               ? item.content.substring(0, 600) + "..."
@@ -55,18 +55,13 @@
 
     <hr />
     <mat-card-actions>
-      <button mat-raised-button color="primary">
+      <button mat-raised-button>
         {{ item.likeCount }} <mat-icon>favorite</mat-icon>
       </button>
-      <button mat-raised-button color="primary" style="margin-left: 5px">
+      <button mat-raised-button>
         {{ item.viewCount }} <mat-icon>remove_red_eye</mat-icon>
       </button>
-      <button
-        mat-raised-button
-        color="primary"
-        style="margin-left: 5px"
-        routerLink="/user/view-post/{{ item.id }}"
-      >
+      <button mat-raised-button routerLink="/user/view-post/{{ item.id }}">
         View Post
       </button>
     </mat-card-actions>

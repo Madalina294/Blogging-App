@@ -1,8 +1,8 @@
 <div *ngIf="postData" class="card-container">
-  <mat-card style="background-color: #e395bc">
+  <mat-card>
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title style="color: white">{{ postData.name }}</mat-card-title>
+      <mat-card-title>{{ postData.name }}</mat-card-title>
       <mat-card-subtitle
         >Posted by: {{ postData.postedBy }} | Posted On:
         {{ postData.date | date : "medium" }}</mat-card-subtitle
@@ -29,7 +29,6 @@
             </div>
             <button
               mat-icon-button
-              color="primary"
               (click)="downloadFile(postData)"
               class="download-btn"
               matTooltip="Descarcă fișierul"
@@ -40,23 +39,21 @@
         </div>
       </mat-grid-tile>
     </mat-grid-list>
-    <mat-card-content style="color: white">{{
-      postData.content
-    }}</mat-card-content>
+    <mat-card-content>{{ postData.content }}</mat-card-content>
     <mat-chip-set>
       <mat-chip *ngFor="let tag of postData.tags">{{ tag }}</mat-chip>
     </mat-chip-set>
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="likePost()">
+      <button mat-raised-button (click)="likePost()">
         {{ postData.likeCount }} <mat-icon>favorite</mat-icon>
       </button>
-      <button mat-raised-button color="primary" style="margin-left: 5px">
+      <button mat-raised-button>
         {{ postData.viewCount }} <mat-icon>remove_red_eye</mat-icon>
       </button>
     </mat-card-actions>
   </mat-card>
 
-  <mat-card class="comment-card" style="background-color: #e395bc">
+  <mat-card class="comment-card">
     <mat-card-content>
       <h4>Publish your comment</h4>
       <div>
@@ -67,8 +64,6 @@
           </mat-form-field>
           <button
             mat-raised-button
-            color="primary"
-            style="float: right; margin-right: 60px"
             [disabled]="!commentForm.valid"
             (click)="publishComment()"
           >
@@ -80,11 +75,7 @@
   </mat-card>
   <br />
   <!-- Comments Section -->
-  <mat-card
-    class="comments-section"
-    *ngIf="comments && comments.length > 0"
-    style="background-color: #e395bc"
-  >
+  <mat-card class="comments-section" *ngIf="comments && comments.length > 0">
     <mat-card-content>
       <h4>Comments ({{ comments.length }})</h4>
       <div class="comment-item" *ngFor="let comment of comments">
