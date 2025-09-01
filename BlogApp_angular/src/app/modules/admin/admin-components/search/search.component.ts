@@ -13,7 +13,7 @@ import {
   MatCardSubtitle, MatCardTitle
 } from '@angular/material/card';
 import {MatGridList, MatGridTile} from '@angular/material/grid-list';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {MatFormField, MatHint, MatInput, MatLabel, MatSuffix} from '@angular/material/input';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterLink} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
@@ -43,7 +43,9 @@ import {MatTooltip} from '@angular/material/tooltip';
     NgIf,
     ReactiveFormsModule,
     RouterLink,
-    FormsModule
+    FormsModule,
+    MatHint,
+    MatSuffix
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss'

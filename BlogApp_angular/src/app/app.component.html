@@ -113,8 +113,18 @@
       </button>
 
       <!-- User Profile -->
-      <div class="user-profile" *ngIf="isCustomerLoggedIn || isAdminLoggedIn">
+      <div class="user-profile" *ngIf="isCustomerLoggedIn">
         <a routerLink="/user/my-account" class="user-link">
+          <div class="user-avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+          <span class="user-name">{{ userName }}</span>
+        </a>
+      </div>
+
+      <!-- Admin Profile -->
+      <div class="user-profile" *ngIf="isAdminLoggedIn">
+        <a routerLink="/admin/admin-panel" class="user-link">
           <div class="user-avatar">
             <mat-icon>person</mat-icon>
           </div>

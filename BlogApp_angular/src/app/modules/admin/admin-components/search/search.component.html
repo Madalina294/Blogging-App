@@ -1,92 +1,137 @@
-<div class="search-form">
-  <mat-form-field appearance="outline" class="search-input">
-    <mat-label style="color: black"
-    >Search by a word</mat-label
-    >
-    <input matInput [(ngModel)]="postTerm" />
-    <button
-      mat-button
-      color="primary"
-      style="float: right"
-      (click)="searchByTerm()"
-    >
+<div class="search-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <div class="page-title">
       <mat-icon>search</mat-icon>
-    </button>
-  </mat-form-field>
-  <div *ngIf="results && results.length > 0">
-    <div class="card-container" *ngFor="let item of results">
-      <mat-card style="background-color: #e395bc">
-        <mat-card-header>
-          <div mat-card-avatar class="example-header-image"></div>
-          <mat-card-title style="color: white">{{ item.name }}</mat-card-title>
-          <mat-card-subtitle
-          >Posted By: {{ item.postedBy }} | Posted On:
-            {{ item.date | date : "medium" }}</mat-card-subtitle
-          >
-        </mat-card-header>
-
-        <mat-grid-list cols="5">
-          <div *ngIf="hasFile(item)">
-            <mat-grid-tile [colspan]="2" [rowspan]="1">
-              <!-- for image -->
-              <div *ngIf="isImage(item)" class="image-container">
-                <img
-                  [src]="'data:image/jpeg;base64,' + item.returnedFile"
-                  class="post-img"
-                  alt="Post Image"
-                />
-              </div>
-
-              <!-- preview document -->
-              <div *ngIf="isDocument(item)" class="document-preview">
-                <div class="file-preview-card">
-                  <mat-icon class="file-icon">{{ getFileIcon(item) }}</mat-icon>
-                  <div class="file-info">
-                    <p class="file-name">{{ item.fileName || "Document" }}</p>
-                    <p class="file-type">{{ getFileTypeDisplay(item) }}</p>
-                  </div>
-                  <button
-                    mat-icon-button
-                    color="primary"
-                    (click)="downloadFile(item)"
-                    class="download-btn"
-                    matTooltip="Descarcă fișierul"
-                  >
-                    <mat-icon>download</mat-icon>
-                  </button>
-                </div>
-              </div>
-            </mat-grid-tile>
-          </div>
-          <mat-grid-tile [colspan]="3" [rowspan]="1">
-            <mat-card-content style="color: white">
-              {{
-                item.content.length > 600
-                  ? item.content.substring(0, 600) + "..."
-                  : item.content
-              }}
-            </mat-card-content>
-          </mat-grid-tile>
-        </mat-grid-list>
-
-        <hr />
-        <mat-card-actions>
-          <button mat-raised-button color="primary">
-            {{ item.likeCount }} <mat-icon>favorite</mat-icon>
-          </button>
-          <button mat-raised-button color="primary" style="margin-left: 5px">
-            {{ item.viewCount }} <mat-icon>remove_red_eye</mat-icon>
-          </button>
-          <button
-            mat-raised-button
-            color="primary"
-            style="margin-left: 5px"
-            routerLink="/admin/view-post/{{ item.id }}"
-          >
-            View Post
-          </button>
-        </mat-card-actions>
-      </mat-card>
+      <h1>Search Posts</h1>
     </div>
+    <p class="page-subtitle">Discover amazing content from our community</p>
+  </div>
+
+  <!-- Search Form Section -->
+  <div class="search-form-section">
+    <mat-card class="search-card">
+      <mat-card-content>
+        <div class="search-form">
+          <h3 class="search-title">
+            <mat-icon>manage_search</mat-icon>
+            Find Posts
+          </h3>
+          <div class="search-input-container">
+            <mat-form-field appearance="outline" class="search-input">
+              <mat-label>Enter keywords to search</mat-label>
+              <input matInput [(ngModel)]="postTerm" />
+              <button
+                mat-icon-button
+                matSuffix
+                color="primary"
+                (click)="searchByTerm()"
+                class="search-btn"
+              >
+                <mat-icon>search</mat-icon>
+              </button>
+              <mat-hint>Search by title, content, or author name</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Results Section -->
+  <div class="results-section" *ngIf="results && results.length > 0">
+    <div class="results-header">
+      <h3 class="section-title">
+        <mat-icon>dynamic_feed</mat-icon>
+        Search Results
+      </h3>
+      <p class="results-count">
+        Found {{ results.length }} post(s) matching your search
+      </p>
+    </div>
+
+    <div class="results-grid">
+      <div class="card-container" *ngFor="let item of results">
+        <mat-card>
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>{{ item.name }}</mat-card-title>
+            <mat-card-subtitle
+            >Posted By: {{ item.postedBy }} | Posted On:
+              {{ item.date | date : "medium" }}</mat-card-subtitle
+            >
+          </mat-card-header>
+
+          <mat-grid-list cols="5">
+            <div *ngIf="hasFile(item)">
+              <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <!-- for image -->
+                <div *ngIf="isImage(item)" class="image-container">
+                  <img
+                    [src]="'data:image/jpeg;base64,' + item.returnedFile"
+                    class="post-img"
+                    alt="Post Image"
+                  />
+                </div>
+
+                <!-- preview document -->
+                <div *ngIf="isDocument(item)" class="document-preview">
+                  <div class="file-preview-card">
+                    <mat-icon class="file-icon">{{
+                        getFileIcon(item)
+                      }}</mat-icon>
+                    <div class="file-info">
+                      <p class="file-name">{{ item.fileName || "Document" }}</p>
+                      <p class="file-type">{{ getFileTypeDisplay(item) }}</p>
+                    </div>
+                    <button
+                      mat-icon-button
+                      color="primary"
+                      (click)="downloadFile(item)"
+                      class="download-btn"
+                      matTooltip="Descarcă fișierul"
+                    >
+                      <mat-icon>download</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </mat-grid-tile>
+            </div>
+            <mat-grid-tile [colspan]="3" [rowspan]="1">
+              <mat-card-content>
+                {{
+                  item.content.length > 600
+                    ? item.content.substring(0, 600) + "..."
+                    : item.content
+                }}
+              </mat-card-content>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <hr />
+          <mat-card-actions>
+            <button mat-raised-button>
+              {{ item.likeCount }} <mat-icon>favorite</mat-icon>
+            </button>
+            <button mat-raised-button>
+              {{ item.viewCount }} <mat-icon>remove_red_eye</mat-icon>
+            </button>
+            <button
+              mat-raised-button
+              routerLink="/admin/view-post/{{ item.id }}"
+            >
+              View Post
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Results Section -->
+  <div class="no-results" *ngIf="results && results.length === 0">
+    <mat-icon>search_off</mat-icon>
+    <h3>No Results Found</h3>
+    <p>Try different keywords or check your spelling</p>
   </div>
 </div>
