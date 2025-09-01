@@ -9,6 +9,7 @@ import {StorageService} from '../../../../auth/services/storage/storage.service'
 import {MatIcon} from '@angular/material/icon';
 import {UpdateProfileComponent} from '../update-profile/update-profile.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component';
 
 @Component({
   selector: 'app-my-account',
@@ -70,6 +71,24 @@ export class MyAccountComponent {
       if (result) {
         // Reîncarcă informațiile utilizatorului
         this.getUserInfo();
+      }
+    });
+  }
+
+  deletePost(postId: number){
+    const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+      width: '400px',
+      data: { message: 'Are you sure you want to delete this post? This action cannot be undone.' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.userService.deletePost(postId).subscribe((res)=>{
+          this.snackBar.open("Post deleted successfully!", "Ok");
+          this.getUserInfo();
+        }, error => {
+          this.snackBar.open("Something went wrong!", "Ok", {duration: 3000})
+        })
       }
     });
   }
