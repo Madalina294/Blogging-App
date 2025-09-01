@@ -16,6 +16,10 @@ import {MatIcon} from '@angular/material/icon';
 import {MatTooltip} from '@angular/material/tooltip';
 import {AdminServiceService} from '../../admin-service/admin-service.service';
 import {RouterLink} from '@angular/router';
+import {
+  ConfirmDeleteDialogComponent
+} from '../../../user/user-components/confirm-delete-dialog/confirm-delete-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-view-all',
@@ -45,7 +49,8 @@ export class ViewAllComponent {
 
   allPosts: any[] = [];
   constructor(private snackBar: MatSnackBar,
-              private adminService: AdminServiceService) {
+              private adminService: AdminServiceService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -62,13 +67,21 @@ export class ViewAllComponent {
   }
 
   deletePost(postId: number){
+    const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+      width: '400px',
+      data: { message: 'Are you sure you want to delete this post? This action cannot be undone.' }
+    });
 
-    this.adminService.deletePost(postId).subscribe((res)=>{
-      this.snackBar.open("Post deleted successfully!", "Ok");
-      this.getAllPosts();
-    }, error => {
-      this.snackBar.open("Something went wrong!", "Ok", {duration: 3000})
-    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.adminService.deletePost(postId).subscribe((res)=>{
+          this.snackBar.open("Post deleted successfully!", "Ok");
+          this.getAllPosts();
+        }, error => {
+          this.snackBar.open("Something went wrong!", "Ok", {duration: 3000})
+        })
+      }
+    });
   }
 
   hasFile(post: any): boolean {

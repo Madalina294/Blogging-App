@@ -99,7 +99,12 @@ export class CreatePostComponent implements OnInit {
     formData.append("name", this.postForm.get('name')?.value);
     formData.append("content", this.postForm.get('content')?.value);
     //formData.append("postedBy", this.postForm.get('postedBy')?.value);
-    formData.append("tags", this.postForm.get('tags')?.value);
+    
+    // Adaugă tag-urile corect din array-ul this.tags
+    this.tags.forEach(tag => {
+      formData.append("tags", tag);
+    });
+    
     formData.append("fileName", this.postForm.get("fileName")?.value);
 
     if (this.selectedFile) {
