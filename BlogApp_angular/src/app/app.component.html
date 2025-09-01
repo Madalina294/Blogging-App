@@ -1,85 +1,138 @@
-<mat-toolbar>
-  <button
-    mat-icon-button
-    class="example-icon menu-button"
-    aria-label="Example icon-button with menu icon"
-    [matMenuTriggerFor]="menu"
-  >
-    <mat-icon>menu</mat-icon>
-  </button>
-  <mat-menu #menu="matMenu">
-    <!-- Admin Menu Items -->
-    <div *ngIf="isAdminLoggedIn">
-      <button mat-menu-item routerLink="/admin/view-all">
-        <mat-icon>list</mat-icon>
-        <span>View All Posts</span>
+<header class="app-header">
+  <mat-toolbar class="custom-toolbar">
+    <!-- Mobile Menu Button -->
+    <button
+      mat-icon-button
+      class="menu-button"
+      aria-label="Open navigation menu"
+      [matMenuTriggerFor]="menu"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <!-- Navigation Menu -->
+    <mat-menu #menu="matMenu" class="custom-menu">
+      <!-- Admin Menu Items -->
+      <div *ngIf="isAdminLoggedIn" class="menu-section">
+        <div class="menu-header">
+          <mat-icon>admin_panel_settings</mat-icon>
+          <span>Admin Panel</span>
+        </div>
+        <button mat-menu-item routerLink="/admin/view-all" class="menu-item">
+          <mat-icon>list</mat-icon>
+          <span>View All Posts</span>
+        </button>
+        <button mat-menu-item routerLink="/admin/search" class="menu-item">
+          <mat-icon>search</mat-icon>
+          <span>Search</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="logout()" class="menu-item logout">
+          <mat-icon>logout</mat-icon>
+          <span>Log Out</span>
+        </button>
+      </div>
+
+      <!-- User Menu Items -->
+      <div *ngIf="isCustomerLoggedIn" class="menu-section">
+        <div class="menu-header">
+          <mat-icon>person</mat-icon>
+          <span>My Dashboard</span>
+        </div>
+        <button mat-menu-item routerLink="/user/create-post" class="menu-item">
+          <mat-icon>add_circle</mat-icon>
+          <span>Create Post</span>
+        </button>
+        <button mat-menu-item routerLink="/user/view-all" class="menu-item">
+          <mat-icon>dynamic_feed</mat-icon>
+          <span>All Posts</span>
+        </button>
+        <button mat-menu-item routerLink="/user/my-account" class="menu-item">
+          <mat-icon>account_circle</mat-icon>
+          <span>My Account</span>
+        </button>
+        <button mat-menu-item routerLink="/user/search" class="menu-item">
+          <mat-icon>search</mat-icon>
+          <span>Search</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="logout()" class="menu-item logout">
+          <mat-icon>logout</mat-icon>
+          <span>Log Out</span>
+        </button>
+      </div>
+
+      <!-- Guest Menu Items -->
+      <div *ngIf="!isCustomerLoggedIn && !isAdminLoggedIn" class="menu-section">
+        <div class="menu-header">
+          <mat-icon>login</mat-icon>
+          <span>Welcome</span>
+        </div>
+        <button mat-menu-item routerLink="/login" class="menu-item">
+          <mat-icon>login</mat-icon>
+          <span>Log In</span>
+        </button>
+      </div>
+    </mat-menu>
+
+    <!-- App Logo & Title -->
+    <div class="app-brand" routerLink="/">
+      <mat-icon class="app-logo">article</mat-icon>
+      <span class="app-title">Blog App</span>
+    </div>
+
+    <span class="spacer"></span>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav" *ngIf="isCustomerLoggedIn">
+      <button mat-button routerLink="/user/view-all" class="nav-button">
+        <mat-icon>dynamic_feed</mat-icon>
+        <span>Posts</span>
       </button>
-      <button mat-menu-item routerLink="/admin/search">
+      <button mat-button routerLink="/user/search" class="nav-button">
         <mat-icon>search</mat-icon>
         <span>Search</span>
       </button>
-      <mat-divider></mat-divider>
-      <button mat-menu-item (click)="logout()">
-        <mat-icon>logout</mat-icon>
-        <span>Log Out</span>
+      <button mat-button routerLink="/user/create-post" class="nav-button">
+        <mat-icon>add_circle</mat-icon>
+        <span>Create</span>
       </button>
-    </div>
+    </nav>
 
-    <!-- User Menu Items -->
-    <div *ngIf="isCustomerLoggedIn">
-      <button mat-menu-item routerLink="/user/create-post">
-        <mat-icon>add</mat-icon>
-        <span>Create a Post</span>
-      </button>
-      <button mat-menu-item routerLink="/user/view-all">
-        <mat-icon>list</mat-icon>
-        <span>View All Posts</span>
-      </button>
-      <button mat-menu-item routerLink="/user/my-account">
-        <mat-icon>person</mat-icon>
-        <span>My account</span>
-      </button>
-      <button mat-menu-item routerLink="/user/search">
-        <mat-icon>search</mat-icon>
-        <span>Search</span>
-      </button>
-      <mat-divider></mat-divider>
-      <button mat-menu-item (click)="logout()">
-        <mat-icon>logout</mat-icon>
-        <span>Log Out</span>
-      </button>
-    </div>
-
-    <!-- Guest Menu Items -->
-    <div *ngIf="!isCustomerLoggedIn && !isAdminLoggedIn">
-      <button mat-menu-item routerLink="/login">
+    <!-- User Profile & Actions -->
+    <div class="header-actions">
+      <!-- Login Button for Guests -->
+      <button
+        mat-raised-button
+        class="login-btn"
+        routerLink="/login"
+        *ngIf="!isCustomerLoggedIn && !isAdminLoggedIn"
+      >
         <mat-icon>login</mat-icon>
-        <span>Log In</span>
+        Log In
+      </button>
+
+      <!-- User Profile -->
+      <div class="user-profile" *ngIf="isCustomerLoggedIn || isAdminLoggedIn">
+        <a routerLink="/user/my-account" class="user-link">
+          <div class="user-avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+          <span class="user-name">{{ userName }}</span>
+        </a>
+      </div>
+
+      <!-- Share Button -->
+      <button
+        mat-icon-button
+        class="share-button"
+        aria-label="Share this app"
+        (click)="shareSite()"
+        matTooltip="Share Blog App"
+      >
+        <mat-icon>share</mat-icon>
       </button>
     </div>
-  </mat-menu>
-
-  <span>Blog App</span>
-  <span class="example-spacer"></span>
-
-  <button
-    mat-raised-button
-    color="primary"
-    routerLink="/login"
-    *ngIf="!isCustomerLoggedIn && !isAdminLoggedIn"
-  >
-    Log In
-  </button>
-
-  <a href="/user/my-account" class="user" *ngIf="isCustomerLoggedIn || isAdminLoggedIn">{{ userName }}
-    <mat-icon style="padding-left: 5px; padding-top: 5px">person</mat-icon></a>
-  <button
-    mat-icon-button
-    class="example-icon"
-    aria-label="Example icon-button with share icon"
-    (click)="shareSite()"
-  >
-    <mat-icon>share</mat-icon>
-  </button>
-</mat-toolbar>
+  </mat-toolbar>
+</header>
 <router-outlet></router-outlet>

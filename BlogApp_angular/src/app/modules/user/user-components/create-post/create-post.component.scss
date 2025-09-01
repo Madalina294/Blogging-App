@@ -1,161 +1,465 @@
-.center-card{
-  margin: auto;
-  margin-top: 10px;
-  padding: 30px;
-  max-width: 600px;
+// Create Post Component Styles - Aligned with My Account & View All
+.create-post-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Roboto', sans-serif;
+  
+  // Global dark text for all inputs
+  input, textarea, select {
+    color: #2c3e50 !important;
+    font-weight: 500 !important;
+    
+    &::placeholder {
+      color: #6c757d !important;
+      opacity: 1 !important;
+    }
+    
+    &:focus {
+      color: #212529 !important;
+    }
+  }
+  
+  // Ensure Material Design input values are dark
+  .mat-mdc-input-element {
+    color: #2c3e50 !important;
+    font-weight: 500 !important;
+  }
+  
+  .mat-mdc-input-element:focus {
+    color: #212529 !important;
+  }
 }
 
-mat-form-field{
-  width: 100%;
+// Header Section (similar to my-account)
+.header-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  padding: 40px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  color: white;
+  text-align: center;
 }
-:host {
+
+.page-title {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  padding: 20px;
+  gap: 15px;
+  margin-bottom: 15px;
+  
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    color: rgba(255, 255, 255, 0.9);
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
+  }
 }
 
-.example-form-field {
-  width: 100%;
+.page-subtitle {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  font-weight: 300;
 }
 
-mat-card{
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
+// Form Section
+.form-section {
+  background: white;
+  border-radius: 20px;
+  padding: 0;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
 }
 
-mat-card-content{
-  padding: 24px;
+mat-card {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
 }
 
-button[mat-raised-button] {
-  align-self: flex-end;
-  margin-top: 16px;
-  padding: 8px 24px;
+mat-card-content {
+  padding: 40px;
+}
+
+// Form Groups
+.form-group {
+  margin-bottom: 35px;
+}
+
+.form-group-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.3rem;
   font-weight: 500;
-  background-color: #1976d2 !important;
-  color: white !important;
-  border: none !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f8f9fa;
+  
+  mat-icon {
+    color: #667eea;
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
 }
 
-button[mat-raised-button]:hover {
-  background-color: #1565c0 !important;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+.full-width {
+  width: 100%;
 }
 
-button[mat-raised-button]:disabled {
-  background-color: #cccccc !important;
-  color: #666666 !important;
-  box-shadow: none !important;
-}
-// create-post.component.scss
-.form-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #333;
-}
-
+// Form Fields
 mat-form-field {
   width: 100%;
-  margin-bottom: 20px;
+  
+  .mat-mdc-form-field-error-wrapper {
+    padding: 0 16px;
+  }
+  
+  .mat-mdc-form-field-hint-wrapper {
+    padding: 0 16px;
+    margin-top: 4px;
+  }
+  
+  // Make input text darker and more visible
+  input, textarea {
+    color: #2c3e50 !important;
+    font-weight: 500 !important;
+    
+    &::placeholder {
+      color: #6c757d !important;
+      opacity: 1 !important;
+    }
+  }
+  
+  // Form field label colors and positioning
+  .mat-mdc-form-field-label {
+    color: #495057 !important;
+  }
+  
+  // Fix label overlap with placeholder
+  .mat-mdc-form-field-label-wrapper {
+    top: 0;
+    padding-top: 0;
+  }
+  
+  // Ensure floating label works correctly
+  &.mat-mdc-form-field-has-icon-prefix .mat-mdc-form-field-label-wrapper {
+    padding-left: 0;
+  }
+  
+  // When field has value or is focused, move label up
+  &.mat-mdc-form-field-label-always-float .mat-mdc-form-field-label,
+  &.mat-focused .mat-mdc-form-field-label {
+    transform: translateY(-50%) scale(0.75);
+    top: 14px;
+  }
+  
+  // Hint text color
+  .mat-mdc-form-field-hint {
+    color: #6c757d !important;
+  }
+  
+  // Input text when focused
+  &.mat-focused {
+    input, textarea {
+      color: #212529 !important;
+    }
+    
+    .mat-mdc-form-field-label {
+      color: #667eea !important;
+    }
+  }
+  
+  // Fix textarea specific label positioning
+  &.mat-mdc-form-field-type-mat-input {
+    .mat-mdc-form-field-label {
+      max-width: calc(100% - 24px);
+      transition: color 200ms cubic-bezier(0.25, 0.8, 0.25, 1), 
+                  transform 200ms cubic-bezier(0.25, 0.8, 0.25, 1), 
+                  width 200ms cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+  }
+  
+  // Force label to always float when there's content
+  &.mat-mdc-form-field-has-value .mat-mdc-form-field-label {
+    transform: translateY(-50%) scale(0.75);
+    top: 14px;
+  }
+  
+  // Additional fix for outline appearance
+  &.mat-mdc-form-field-appearance-outline {
+    .mat-mdc-form-field-label {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    
+    &.mat-focused .mat-mdc-form-field-label,
+    &.mat-mdc-form-field-has-value .mat-mdc-form-field-label {
+      top: 0;
+      transform: translateY(-50%) scale(0.75);
+    }
+  }
 }
 
-.file-upload-section {
-  margin: 30px 0;
-  padding: 20px;
-  border: 2px dashed #ddd;
-  border-radius: 8px;
-  background-color: #fafafa;
-
-  h3 {
-    margin-top: 0;
-    color: #666;
+// File Upload Area
+.file-upload-area {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 2px dashed #dee2e6;
+  border-radius: 15px;
+  padding: 25px;
+  text-align: center;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    border-color: #667eea;
+    background: linear-gradient(135deg, #f1f3ff 0%, #e6eaff 100%);
   }
 }
 
 .file-upload-buttons {
   display: flex;
-  gap: 10px;
+  gap: 15px;
+  justify-content: center;
   margin-bottom: 20px;
+  flex-wrap: wrap;
+  
+  button {
+    background: linear-gradient(135deg, #e395bc, #d17ba8);
+    color: white;
+    border-radius: 25px;
+    padding: 10px 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    
+    &:hover {
+      background: linear-gradient(135deg, #d17ba8, #c06a9a);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(227, 149, 188, 0.4);
+    }
+    
+    &[color="warn"] {
+      background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+      
+      &:hover {
+        background: linear-gradient(135deg, #ff5757, #e04848);
+        box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+      }
+    }
+    
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
 }
 
 .file-info {
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .file-card {
-  background-color: white;
-  border: 1px solid #e0e0e0;
-
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
   .file-details {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
   }
-
+  
   .file-icon {
-    font-size: 40px;
-    color: #1976d2;
+    font-size: 48px;
+    color: #667eea;
   }
-
+  
   .file-text {
     flex: 1;
-
+    
     .file-name {
-      margin: 0;
-      font-weight: 500;
-      color: #333;
+      margin: 0 0 8px 0;
+      font-weight: 600;
+      color: #2c3e50;
+      font-size: 1.1rem;
     }
-
+    
     .file-type, .file-size {
-      margin: 5px 0 0 0;
-      color: #666;
-      font-size: 14px;
+      margin: 4px 0;
+      color: #6c757d;
+      font-size: 0.9rem;
     }
   }
 }
 
-
-.tags-section {
-  margin: 20px 0;
-}
-
-.tags-form-field {
-  width: 100%;
-}
-
-.form-actions {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  margin-top: 30px;
-
-  .create-button {
-    min-width: 150px;
+.image-preview {
+  margin-top: 20px;
+  text-align: center;
+  
+  img {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   }
 }
 
-// Responsive design
-@media (max-width: 600px) {
-  .form-container {
-    padding: 10px;
+// Tags Section
+.tags-container {
+  .custom-chip {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    font-weight: 500;
+    
+    button {
+      color: rgba(255, 255, 255, 0.8);
+      
+      &:hover {
+        color: white;
+      }
+    }
   }
+  
+  // Make chip input text darker
+  input {
+    color: #2c3e50 !important;
+    font-weight: 500 !important;
+    
+    &::placeholder {
+      color: #6c757d !important;
+      opacity: 1 !important;
+    }
+  }
+}
 
+// Submit Section
+.submit-section {
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 2px solid #f8f9fa;
+}
+
+.create-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2) !important;
+  color: white !important;
+  border-radius: 30px !important;
+  padding: 15px 40px !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  border: none !important;
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3) !important;
+  
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, #5a67d8, #6b46c1) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4) !important;
+  }
+  
+  &:disabled {
+    background: #cccccc !important;
+    color: #666666 !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+  
+  mat-icon {
+    margin-right: 10px;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .create-post-container {
+    padding: 15px;
+  }
+  
+  .header-section {
+    padding: 25px 20px;
+  }
+  
+  .page-title {
+    flex-direction: column;
+    gap: 10px;
+    
+    mat-icon {
+      font-size: 40px;
+      width: 40px;
+      height: 40px;
+    }
+    
+    h1 {
+      font-size: 2rem;
+    }
+  }
+  
+  .page-subtitle {
+    font-size: 1rem;
+  }
+  
+  mat-card-content {
+    padding: 25px 20px;
+  }
+  
+  .form-group-title {
+    font-size: 1.1rem;
+  }
+  
   .file-upload-buttons {
     flex-direction: column;
+    align-items: center;
+    
+    button {
+      width: 100%;
+      max-width: 250px;
+    }
   }
+  
+  .create-btn {
+    width: 100%;
+    max-width: 300px;
+  }
+}
 
-  .form-actions {
-    flex-direction: column;
+@media (max-width: 480px) {
+  .create-post-container {
+    padding: 10px;
+  }
+  
+  .header-section {
+    padding: 20px 15px;
+  }
+  
+  .page-title h1 {
+    font-size: 1.8rem;
+  }
+  
+  mat-card-content {
+    padding: 20px 15px;
+  }
+  
+  .file-upload-area {
+    padding: 20px 15px;
   }
 }

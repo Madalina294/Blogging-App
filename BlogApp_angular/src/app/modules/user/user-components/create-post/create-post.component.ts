@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatCard, MatCardContent} from '@angular/material/card';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {MatFormField, MatInput, MatLabel, MatHint} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 import {MatChipGrid, MatChipInput, MatChipRemove, MatChipRow} from '@angular/material/chips';
 import {MatIcon} from '@angular/material/icon';
@@ -20,6 +20,7 @@ import {UserService} from '../../user-service/user.service';
     MatLabel,
     MatFormField,
     MatInput,
+    MatHint,
     MatButton,
     MatChipGrid,
     MatChipRow,

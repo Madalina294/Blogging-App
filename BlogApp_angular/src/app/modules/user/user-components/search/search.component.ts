@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {UserService} from '../../user-service/user.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatFormField, MatInput, MatLabel, MatSuffix} from '@angular/material/input';
+import {MatFormField, MatInput, MatLabel, MatSuffix, MatHint} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
@@ -24,6 +24,8 @@ import {MatTooltip} from '@angular/material/tooltip';
     MatFormField,
     MatLabel,
     MatInput,
+    MatHint,
+    MatSuffix,
     FormsModule,
     MatButton,
     MatIcon,
