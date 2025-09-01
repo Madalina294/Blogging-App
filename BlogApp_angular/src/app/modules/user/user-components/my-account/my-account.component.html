@@ -39,7 +39,11 @@
       <mat-icon>person</mat-icon>
     </div>
     <h2 class="username">{{ username }}</h2>
-    <button mat-raised-button color="accent" (click)="openUpdateProfileDialog()">
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="openUpdateProfileDialog()"
+    >
       <mat-icon>edit</mat-icon>
       My Infos
     </button>
@@ -64,7 +68,11 @@
               <mat-icon>visibility</mat-icon>
               View post
             </button>
-            <button mat-button  style="margin-left: 10px" (click)="deletePost(post.id)">
+            <button
+              mat-button
+              style="margin-left: 10px"
+              (click)="deletePost(post.id)"
+            >
               <mat-icon>delete</mat-icon>
               Delete
             </button>

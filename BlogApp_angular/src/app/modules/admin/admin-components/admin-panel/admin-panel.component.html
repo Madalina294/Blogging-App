@@ -1,0 +1,48 @@
+<div class="my-account-container">
+  <div class="user-info-section">
+    <div class="user-header">
+      <div class="user-avatar">
+        <mat-icon>person</mat-icon>
+      </div>
+      <h2 class="username">{{ username }}</h2>
+    </div>
+
+    <div class="user-stats">
+      <div class="stat-card">
+        <div class="stat-number">{{ numberOfPosts }}</div>
+        <div class="stat-label">
+          <mat-icon>article</mat-icon>
+          <span>Posts</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-number">{{ numberOfLikes }}</div>
+        <div class="stat-label">
+          <mat-icon>favorite</mat-icon>
+          <span>Likes</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-number">{{ numberOfViews }}</div>
+        <div class="stat-label">
+          <mat-icon>visibility</mat-icon>
+          <span>Views</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Update Profile Button -->
+    <div class="update-profile-section">
+      <button
+        mat-raised-button
+        class="update-profile-btn"
+        (click)="openUpdateProfileDialog()"
+      >
+        <mat-icon>edit</mat-icon>
+        Update Profile
+      </button>
+    </div>
+  </div>
+</div>
