@@ -2,3 +2,103 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Global styles for making input text darker and more visible */
+// Standard HTML input elements
+input, textarea, select {
+  color: #2c3e50 !important;
+  font-weight: 500 !important;
+
+  &::placeholder {
+    color: #6c757d !important;
+    opacity: 1 !important;
+  }
+
+  &:focus {
+    color: #212529 !important;
+  }
+}
+
+// Angular Material input elements - global override
+.mat-mdc-input-element {
+  color: #2c3e50 !important;
+  font-weight: 500 !important;
+  -webkit-text-fill-color: #2c3e50 !important;
+
+  &:focus {
+    color: #212529 !important;
+    -webkit-text-fill-color: #212529 !important;
+  }
+
+  &:not(:focus) {
+    color: #2c3e50 !important;
+    -webkit-text-fill-color: #2c3e50 !important;
+  }
+}
+
+// For all types of Material form fields
+.mat-mdc-form-field-type-mat-input .mat-mdc-input-element,
+.mat-mdc-form-field-appearance-outline .mat-mdc-input-element,
+.mat-mdc-form-field-appearance-fill .mat-mdc-input-element {
+  color: #2c3e50 !important;
+  font-weight: 500 !important;
+  -webkit-text-fill-color: #2c3e50 !important;
+}
+
+// Input autofill override
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: #2c3e50 !important;
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+// Material Design form field labels - prevent overlap
+.mat-mdc-form-field {
+  .mat-mdc-form-field-label {
+    color: #667eea !important;
+    font-weight: 400 !important;
+    transition: all 0.2s ease-in-out !important;
+  }
+
+  // Proper label positioning for filled fields
+  &.mat-mdc-form-field-appearance-fill {
+    .mat-mdc-form-field-infix {
+      padding-top: 25px !important;
+      padding-bottom: 8px !important;
+    }
+    
+    .mat-mdc-form-field-label {
+      top: 28px !important;
+      transform: translateY(-50%) !important;
+    }
+    
+    &.mat-mdc-form-field-has-icon-prefix .mat-mdc-form-field-label,
+    &.mat-mdc-form-field-label-always-float .mat-mdc-form-field-label,
+    &.mat-focused .mat-mdc-form-field-label {
+      top: 8px !important;
+      transform: translateY(-50%) scale(0.75) !important;
+    }
+  }
+
+  // Proper label positioning for outline fields
+  &.mat-mdc-form-field-appearance-outline {
+    .mat-mdc-form-field-label {
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+    }
+    
+    &.mat-mdc-form-field-has-icon-prefix .mat-mdc-form-field-label,
+    &.mat-mdc-form-field-label-always-float .mat-mdc-form-field-label,
+    &.mat-focused .mat-mdc-form-field-label {
+      top: 0 !important;
+      transform: translateY(-50%) scale(0.75) !important;
+    }
+  }
+
+  // General focused state
+  &.mat-focused .mat-mdc-form-field-label {
+    color: #667eea !important;
+  }
+}

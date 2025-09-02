@@ -77,3 +77,97 @@ button {
   }
 }
 
+// Input text styling - make text much darker and more visible
+input, textarea, select {
+  color: #2c3e50 !important;
+  font-weight: 500 !important;
+
+  &::placeholder {
+    color: #6c757d !important;
+    opacity: 1 !important;
+  }
+
+  &:focus {
+    color: #212529 !important;
+  }
+}
+
+// Angular Material specific input styling
+::ng-deep {
+  .mat-mdc-form-field {
+    // Input element styling
+    .mat-mdc-input-element {
+      color: #2c3e50 !important;
+      font-weight: 500 !important;
+      -webkit-text-fill-color: #2c3e50 !important;
+
+      &:focus {
+        color: #212529 !important;
+        -webkit-text-fill-color: #212529 !important;
+      }
+
+      &:not(:focus) {
+        color: #2c3e50 !important;
+        -webkit-text-fill-color: #2c3e50 !important;
+      }
+    }
+
+    // Label positioning and styling
+    .mat-mdc-form-field-label {
+      color: #667eea !important;
+      font-weight: 400 !important;
+    }
+
+    // When field has value or is focused - float the label
+    &.mat-mdc-form-field-has-icon-prefix .mat-mdc-form-field-label,
+    &.mat-mdc-form-field-label-always-float .mat-mdc-form-field-label,
+    &.mat-focused .mat-mdc-form-field-label {
+      color: #667eea !important;
+      transform: translateY(-50%) scale(0.75) !important;
+      top: 14px !important;
+    }
+
+    // For filled appearance
+    &.mat-mdc-form-field-appearance-fill {
+      .mat-mdc-form-field-label {
+        top: 28px !important;
+      }
+      
+      &.mat-mdc-form-field-has-icon-prefix .mat-mdc-form-field-label,
+      &.mat-mdc-form-field-label-always-float .mat-mdc-form-field-label,
+      &.mat-focused .mat-mdc-form-field-label {
+        top: 8px !important;
+      }
+    }
+
+    // For outline appearance  
+    &.mat-mdc-form-field-appearance-outline {
+      .mat-mdc-form-field-label {
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+      }
+      
+      &.mat-mdc-form-field-has-icon-prefix .mat-mdc-form-field-label,
+      &.mat-mdc-form-field-label-always-float .mat-mdc-form-field-label,
+      &.mat-focused .mat-mdc-form-field-label {
+        top: 0 !important;
+        transform: translateY(-50%) scale(0.75) !important;
+      }
+    }
+
+    // Ensure proper spacing
+    .mat-mdc-form-field-infix {
+      padding-top: 16px !important;
+      padding-bottom: 16px !important;
+      min-height: 56px !important;
+    }
+
+    // Fix label wrapper positioning
+    .mat-mdc-form-field-label-wrapper {
+      top: 0 !important;
+      padding-top: 0 !important;
+      height: 100% !important;
+      pointer-events: none !important;
+    }
+  }
+}

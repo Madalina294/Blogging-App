@@ -11,7 +11,7 @@
     <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Name</mat-label>
-        <input matInput formControlName="name" placeholder="Enter your name" />
+        <input matInput formControlName="name" />
         <mat-error *ngIf="hasNameError('required')">
           The name is required!
         </mat-error>
@@ -25,7 +25,6 @@
         <input
           matInput
           formControlName="email"
-          placeholder="Enter your email"
           type="email"
         />
         <mat-error *ngIf="hasEmailError('required')">
@@ -41,7 +40,6 @@
         <input
           matInput
           formControlName="password"
-          placeholder="Leave empty to keep current password"
           type="password"
         />
         <mat-hint
@@ -58,7 +56,6 @@
         <input
           matInput
           formControlName="confirmPassword"
-          placeholder="Confirm new password"
           type="password"
         />
         <mat-hint>Only required if you're changing your password</mat-hint>

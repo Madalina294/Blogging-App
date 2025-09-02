@@ -2,6 +2,8 @@ package com.blogging.blogServer.controller;
 
 
 import com.blogging.blogServer.dto.PostDto;
+import com.blogging.blogServer.dto.UpdateProfileRequest;
+import com.blogging.blogServer.dto.UserDto;
 import com.blogging.blogServer.entity.Post;
 import com.blogging.blogServer.service.admin.AdminService;
 import jakarta.persistence.EntityNotFoundException;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -70,6 +73,32 @@ public class AdminController {
     public ResponseEntity<?> deletePost(@PathVariable("id") Long postId){
         adminService.deletePost(postId);
         return ResponseEntity.ok(null);
+    }
+
+    @PutMapping("/update-profile/{userId}")
+    public ResponseEntity<?> updateProfile(@PathVariable Long userId,
+                                           @RequestBody UpdateProfileRequest request) {
+        try {
+            UserDto updatedUser = adminService.updateProfile(userId, request);
+
+            // Returnează răspunsul cu noul token
+            Map<String, Object> response = Map.of(
+                    "user", updatedUser,
+                    "newToken", updatedUser.getToken(),
+                    "message", "Profile updated successfully"
+            );
+
+            return ResponseEntity.ok(response);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("error", e.getMessage()));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Error updating profile"));
+        }
     }
 
 }

@@ -17,6 +17,7 @@ import {MatFormField, MatInput, MatLabel, MatError, MatHint} from '@angular/mate
 import {MatIcon} from '@angular/material/icon';
 import {NgIf} from '@angular/common';
 import {MatButton} from '@angular/material/button';
+import {AdminServiceService} from '../../../admin/admin-service/admin-service.service';
 
 @Component({
   selector: 'app-update-profile',
@@ -46,6 +47,7 @@ export class UpdateProfileComponent implements OnInit{
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
+    private adminService: AdminServiceService,
     private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<UpdateProfileComponent>,
     private updateNotificationService: UpdateNotificationService
@@ -138,32 +140,62 @@ export class UpdateProfileComponent implements OnInit{
     console.log('Form data before cleaning:', formData);
     console.log('Form data after cleaning:', cleanedFormData);
 
-    this.userService.updateProfile(userId, cleanedFormData).subscribe({
-      next: (response: any) => {
-        // Actualizează StorageService cu noile date și token-ul
-        StorageService.updateUserProfileWithToken(response.user, response.newToken);
+    if(StorageService.isAdminLoggedIn()){
+      this.adminService.updateProfile(userId, cleanedFormData).subscribe({
+        next: (response: any) => {
+          // Actualizează StorageService cu noile date și token-ul
+          StorageService.updateUserProfileWithToken(response.user, response.newToken);
 
-        // Notifică alte componente despre actualizarea profilului
-        this.updateNotificationService.notifyProfileUpdated();
+          // Notifică alte componente despre actualizarea profilului
+          this.updateNotificationService.notifyProfileUpdated();
 
-        this.snackBar.open('Profile updated successfully! All your posts and comments have been updated with your new name.', 'Close', {
-          duration: 5000,
-          horizontalPosition: 'center',
-          verticalPosition: 'top'
-        });
+          this.snackBar.open('Profile updated successfully! All your comments have been updated with your new name.', 'Close', {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top'
+          });
 
-        this.dialogRef.close(true); // true = actualizare cu succes
-      },
-      error: (error) => {
-        console.error('Error updating profile:', error);
-        this.snackBar.open(
-          error.error?.error || 'Error updating profile',
-          'Close',
-          { duration: 5000 }
-        );
-        this.isLoading = false;
-      }
-    });
+          this.dialogRef.close(true); // true = actualizare cu succes
+        },
+        error: (error) => {
+          console.error('Error updating profile:', error);
+          this.snackBar.open(
+            error.error?.error || 'Error updating profile',
+            'Close',
+            { duration: 5000 }
+          );
+          this.isLoading = false;
+        }
+      })
+    }
+    else if(StorageService.isCustomerLoggedIn()){
+      this.userService.updateProfile(userId, cleanedFormData).subscribe({
+        next: (response: any) => {
+          // Actualizează StorageService cu noile date și token-ul
+          StorageService.updateUserProfileWithToken(response.user, response.newToken);
+
+          // Notifică alte componente despre actualizarea profilului
+          this.updateNotificationService.notifyProfileUpdated();
+
+          this.snackBar.open('Profile updated successfully! All your posts and comments have been updated with your new name.', 'Close', {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top'
+          });
+
+          this.dialogRef.close(true); // true = actualizare cu succes
+        },
+        error: (error) => {
+          console.error('Error updating profile:', error);
+          this.snackBar.open(
+            error.error?.error || 'Error updating profile',
+            'Close',
+            { duration: 5000 }
+          );
+          this.isLoading = false;
+        }
+      });
+    }
   }
 
   private cleanFormData(formData: any): any {

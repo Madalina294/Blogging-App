@@ -2,16 +2,20 @@ package com.blogging.blogServer.service.admin;
 
 import com.blogging.blogServer.dto.CommentDto;
 import com.blogging.blogServer.dto.PostDto;
+import com.blogging.blogServer.dto.UpdateProfileRequest;
+import com.blogging.blogServer.dto.UserDto;
 import com.blogging.blogServer.entity.Comment;
 import com.blogging.blogServer.entity.Post;
 import com.blogging.blogServer.entity.User;
 import com.blogging.blogServer.repository.CommentRepository;
 import com.blogging.blogServer.repository.PostRepository;
 import com.blogging.blogServer.repository.UserRepository;
+import com.blogging.blogServer.utils.JWTUtil;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -31,6 +35,12 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JWTUtil jwtUtil;
 
     @Override
     public List<PostDto> getAllPosts() {
@@ -92,5 +102,57 @@ public class AdminServiceImpl implements AdminService {
             postRepository.delete(post.get());
         }
         else throw new EntityNotFoundException("Post not found");
+    }
+    @Override
+    public UserDto updateProfile(Long userId, UpdateProfileRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        // Verifică dacă email-ul nou este deja folosit de alt utilizator
+        if (!user.getEmail().equals(request.getEmail())) {
+            Optional<User> existingUser = userRepository.findFirstByEmail(request.getEmail());
+            if (existingUser.isPresent()) {
+                throw new IllegalArgumentException("Email already exists");
+            }
+        }
+
+        // Verifică dacă numele s-a schimbat
+        boolean nameChanged = !user.getName().equals(request.getName());
+
+        // Actualizează câmpurile
+        user.setName(request.getName());
+        user.setEmail(request.getEmail());
+
+        // Actualizează password-ul doar dacă este furnizat și valid
+        if (request.getPassword() != null && !request.getPassword().isEmpty()) {
+            // Verifică dacă confirmPassword este furnizat și se potrivește
+            if (request.getConfirmPassword() == null || !request.getPassword().equals(request.getConfirmPassword())) {
+                throw new IllegalArgumentException("Passwords do not match");
+            }
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+        }
+
+        User savedUser = userRepository.save(user);
+
+        // Dacă numele s-a schimbat, actualizează toate comentariile adminului
+        if (nameChanged) {
+            updateUserCommentsAuthorName(userId, request.getName());
+        }
+
+        UserDto userDto = savedUser.getUserDto();
+
+        // Generează un nou JWT token cu noile credențiale
+        String newToken = jwtUtil.generateToken(savedUser);
+        userDto.setToken(newToken);
+
+        return userDto;
+    }
+
+    private void updateUserCommentsAuthorName(Long userId, String newAuthorName) {
+        List<Comment> userComments = commentRepository.findByUserId(userId);
+        for (Comment comment : userComments) {
+            comment.setPostedBy(newAuthorName);
+        }
+        commentRepository.saveAll(userComments);
     }
 }

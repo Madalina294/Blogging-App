@@ -40,6 +40,12 @@ export class AdminServiceService {
     });
   }
 
+  updateProfile(userId: number, formData: any): Observable<any>{
+    return this.http.put(BASE_URL + `api/admin/update-profile/${userId}`, formData, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+
   createComment(postId: number, content: string): Observable<any> {
     const params = new URLSearchParams();
     params.set('postId', postId.toString());
