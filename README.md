@@ -1,2 +1,2 @@
 # Blogging-App
-Demo app for blogging
+Web application for blogging
