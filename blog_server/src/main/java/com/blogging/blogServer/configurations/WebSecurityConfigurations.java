@@ -4,6 +4,9 @@ package com.blogging.blogServer.configurations;
 import java.util.Arrays;
 import java.util.Collections;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,7 +36,11 @@ import lombok.RequiredArgsConstructor;
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfigurations {
+    @Autowired
     private final UserService userService;
+
+    @Value("${spring.profiles.active}")
+    private String activeProfiles;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
@@ -48,6 +55,10 @@ public class WebSecurityConfigurations {
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+        if(activeProfiles.equals("prod")) {
+            httpSecurity.requiresChannel(channel -> channel.anyRequest().requiresSecure());
+        }
         return httpSecurity.build();
     }
 
