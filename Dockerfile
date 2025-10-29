@@ -5,9 +5,9 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the Maven wrapper and pom.xml
-COPY mvnw .
-COPY .mvn .mvn
-COPY pom.xml .
+COPY blog_server/mvnw .
+COPY blog_server/.mvn .mvn
+COPY blog_server/pom.xml .
 
 # Make mvnw executable
 RUN chmod +x ./mvnw
@@ -16,7 +16,7 @@ RUN chmod +x ./mvnw
 RUN ./mvnw dependency:go-offline -B
 
 # Copy source code
-COPY src ./src
+COPY blog_server/src ./src
 
 # Build the application
 RUN ./mvnw clean package -DskipTests
