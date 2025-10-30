@@ -2,13 +2,12 @@ package com.blogging.blogServer.configurations;
 
 
 import java.util.Arrays;
-import java.util.Collections;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -47,8 +46,11 @@ public class WebSecurityConfigurations {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .authorizeHttpRequests(request -> request.requestMatchers("/api/auth/**").permitAll()
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/error").permitAll()
+                        .requestMatchers("/home").permitAll()
                         .requestMatchers("/api/user/**").hasAnyAuthority(UserRole.USER.name())
                         .requestMatchers("/api/admin/**").hasAnyAuthority(UserRole.ADMIN.name())
                         .anyRequest().authenticated())
@@ -56,9 +58,9 @@ public class WebSecurityConfigurations {
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        if(activeProfiles.equals("prod")) {
-            httpSecurity.requiresChannel(channel -> channel.anyRequest().requiresSecure());
-        }
+        //if(activeProfiles.equals("prod")) {
+            //httpSecurity.requiresChannel(channel -> channel.anyRequest().requiresSecure());
+       // }
         return httpSecurity.build();
     }
 
@@ -83,10 +85,27 @@ public class WebSecurityConfigurations {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Collections.singletonList("http://localhost:4200"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin"));
-        configuration.setAllowCredentials(true);
+        
+        // Permite conexiuni de la localhost (pentru dezvoltare) și de la S3 bucket
+        configuration.setAllowedOrigins(Arrays.asList(
+            "http://localhost:4200",
+            "http://angular-blog-app.s3-website.eu-north-1.amazonaws.com"
+        ));
+        
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+        configuration.setAllowedHeaders(Arrays.asList(
+            "Authorization", 
+            "Content-Type", 
+            "X-Requested-With", 
+            "Accept", 
+            "Origin", 
+            "Cache-Control",
+            "Access-Control-Request-Method",
+            "Access-Control-Request-Headers"
+        ));
+        configuration.setExposedHeaders(Arrays.asList("Authorization"));
+        configuration.setAllowCredentials(true); // Permite credentials pentru JWT
+        configuration.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

@@ -1,8 +1,0 @@
-application:
-  cors:
-    allowed-origins: "http://localhost:4200"
-    allowed-methods: "*"
-    allowed-headers: "*"
-    exposed-headers: "*"
-    allow-credentials: false
-    max-age: 3600
